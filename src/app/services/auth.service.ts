@@ -23,4 +23,9 @@ export class AuthService {
   loginUser(credentials) {
     return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
   }
+
+  registrUser(credentials) {
+    console.log(credentials, 'auth')
+    return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password);
+  }
 }

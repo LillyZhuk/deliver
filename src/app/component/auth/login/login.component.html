@@ -1,6 +1,6 @@
 <div class="main-login">
 
-  <form [formGroup]="form" (ngSubmit)="OnSubmit()">
+  <form [formGroup]="form" >
     <div class="login component-title form-group">
       <ion-title class="text-white">Please enter your personal info</ion-title>
     </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="login component-button">
-      <ion-button expand="full" id="btn-my">Log In</ion-button>
+      <ion-button expand="full" id="btn-my" [disabled]="!form.valid" (click)="OnSubmit()">Log In</ion-button>
     </div>
   </form>
 

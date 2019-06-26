@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HomePage } from '../../../home/home.page';
+import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -18,15 +16,12 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private authService: AuthService,
-      private router: Router,
-      public afAuth: AngularFireAuth,
-      public navCtrl: NavController,
-      public navParams: NavParams
+      private router: Router
   ) { }
 
   ngOnInit() {
     this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      email: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.pattern('[a-zA-Z0-9 ]*')]),
       remember: new FormControl(false, [Validators.requiredTrue])
     });
@@ -41,7 +36,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.loginUser(credentials).then(
-        () => this.navCtrl.setRoot(HomePage),
+        () => this.router.navigateByUrl('home')
     );
   }
 

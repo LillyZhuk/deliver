@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { LoginComponent } from './component/auth/login/login.component';
+
 
 @Component({
   selector: 'app-root',
@@ -12,14 +12,19 @@ import { LoginComponent } from './component/auth/login/login.component';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Profile',
-      url: '/home',
-      icon: 'home'
+      title: ' Профиль',
+      url: '/profile',
+      icon: 'person'
     },
     {
-      title: 'Settings',
-      url: '/list',
-      icon: 'list'
+      title: ' Настройки',
+      url: '/setting',
+      icon: 'build'
+    },
+    {
+      title: ' Выйти',
+      url: '/login',
+      icon: 'arrow-back'
     }
   ];
 

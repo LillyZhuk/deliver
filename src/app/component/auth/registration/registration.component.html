@@ -3,17 +3,17 @@
     <ion-title class="text-white">Please enter your personal info</ion-title>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="OnSubmit()">
+  <form [formGroup]="form" >
     <div class="login component-name">
-      <input type="text" placeholder="Enter login" class="new-height">
+      <input type="text" placeholder="Enter login" class="new-height" formControlName="name">
     </div>
 
     <div class="login component-email">
-      <input type="text" placeholder="Enter your email" class="new-height">
+      <input type="text" placeholder="Enter your email" class="new-height" formControlName="email">
     </div>
 
     <div class="login component-password">
-      <input type="password" placeholder="Enter the password" class="new-height">
+      <input type="password" placeholder="Enter the password" class="new-height" formControlName="password">
     </div>
 
     <div class="login component-password">
@@ -21,12 +21,12 @@
     </div>
 
     <div class="login component-remember">
-      <input type="checkbox" class="regular-checkbox">
+      <input type="checkbox" class="regular-checkbox" formControlName="agree">
       <span>I accept the terms of the agreement</span>
     </div>
 
     <div class="login component-button">
-      <ion-button expand="full" id="btn-my">Registration</ion-button>
+      <ion-button expand="full" id="btn-my" [disabled]="!form.valid" (click)="OnSubmit()">Registration</ion-button>
     </div>
   </form>
 

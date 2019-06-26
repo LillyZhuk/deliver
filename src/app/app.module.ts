@@ -8,12 +8,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {AuthModule} from './component/auth/auth.module';
+import { AuthModule } from './component/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
+import { HomePageModule } from './home/home.module';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { firebaseConfig } from './core/config';
+import { firebaseConfig } from './component/core/config';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { firebaseConfig } from './core/config';
   imports: [
     BrowserModule,
     AuthModule,
+    HomePageModule,
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,

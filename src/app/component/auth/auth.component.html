@@ -1,0 +1,30 @@
+<ion-content class="main container">
+  <div class="wrapper">
+    <ion-thumbnail class="img-burger">
+      <ion-img src="./../../../assets/burger.svg"></ion-img>
+    </ion-thumbnail>
+    <ion-title>Welcome</ion-title>
+    <div class="auth-content">
+
+      <div class="additional">
+        <div class="new-width">
+          <router-outlet></router-outlet>
+        </div>
+
+        <div class="nav-menu">
+          <nav class="menu">
+            <ul class="nav met-menu">
+              <li routerLinkActive="active">
+                <a [routerLink]="['/login']">LOG IN</a>
+              </li>
+              <li routerLinkActive="active">
+                <a [routerLink]="['/registration']">REGISTRATION</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,29 @@
+<div class="main-login">
+
+  <form [formGroup]="form" (ngSubmit)="OnSubmit()">
+    <div class="login component-title form-group">
+      <ion-title class="text-white">Please enter your personal info</ion-title>
+    </div>
+
+    <div class="login component-email form-group">
+      <input type="text" placeholder="Enter your login or email" class="new-height" id="email" formControlName="email">
+    </div>
+
+    <div class="login component-password form-group">
+      <input type="password" placeholder="Enter the password" class="new-height" formControlName="password" id="password">
+    </div>
+
+    <div class="login component-remember form-group">
+      <div class="text-center">
+        <input type="checkbox" class="regular-checkbox" id="remember" formControlName="remember">
+        <span>Remember me</span>
+      </div>
+      <a href="#">Forgot password?</a>
+    </div>
+
+    <div class="login component-button">
+      <ion-button expand="full" id="btn-my">Log In</ion-button>
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,104 @@
+.main-login {
+  display: flex;
+  flex-direction: column;
+  margin: 5% 0 5% 0;
+  align-items: center;
+}
+
+.login {
+  margin: 10px 0;
+}
+
+form {
+  width: 100%;
+}
+
+.text-white {
+  color: white;
+}
+
+.component-email,
+.component-password,
+.component-button,
+.component-remember{
+  width: 100%;
+}
+
+
+input[type=text],
+input[type=password] {
+  //color: #7e57ff;
+  padding: 5px;
+  outline:none;
+  height: 45px;
+  width: 100%;
+}
+
+.regular-checkbox {
+  -webkit-appearance: none;
+  background-color: #40597d;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+  padding: 7.5px;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+  outline:none;
+}
+
+.regular-checkbox:active, .regular-checkbox:checked:active {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.regular-checkbox:checked {
+  background-color: #40597d;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+  color: #99a1a7;
+}
+
+.regular-checkbox:checked:after {
+  content: '\2713';
+  font-size: 19px;
+  position: absolute;
+  top: -5px;
+  left: 0px;
+  color: white;
+}
+
+span {
+  color: #40597d;
+  margin-left: 3px;
+}
+
+.text-center {
+  display: flex;
+  align-items: center;
+}
+
+.component-remember {
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:focus {
+  outline: none;
+}
+
+.component-button {
+  padding-top: 10%;
+}
+#btn-my {
+  background: #7941bf;
+  //padding: 5% 0;
+  //width: 100%;
+  //font-size: 18px;
+  //color: white;
+}
+
+#btn-my:focus {
+  outline: none;
+}

@@ -50,34 +50,6 @@ const routes: Routes = [
         redirectTo: '/home/list-cafe',
         pathMatch: 'full'
     }
-    // {path: 'home', component: HomePage, children: [
-    //         {path: 'list-cafe', component: ListCafePage, children: [
-    //                         {path: '', loadChildren: '../list-cafe/list-cafe.module#ListCafePageModule'},
-    //                     ]},
-    //         {path: 'history', component: HistoryPage},
-    //         {path: 'chat', component: ChatPage}
-    //     ]}
-    // {
-    //     path: 'home',
-    //     component: HomePage,
-    //     children: [
-    //         {path: '', loadChildren: '../list-cafe/list-cafe.module#ListCafePageModule'},
-    //     ]
-    // },
-    // {
-    //     path: 'history',
-    //     component: HomePage,
-    //     children: [
-    //         {path: '', loadChildren: '../history/history.module#HistoryPageModule'},
-    //     ]
-    // },
-    // {
-    //     path: 'chat',
-    //     component: HomePage,
-    //     children: [
-    //         {path: '', loadChildren: '../chat/chat.module#ChatPageModule'},
-    //     ]
-    // }
 ];
 
 @NgModule({

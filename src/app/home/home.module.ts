@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
+import { ChatPageModule } from './chat/chat.module';
 
 import { HomePageRoutingModule } from './home.router.module';
 
@@ -12,7 +13,8 @@ import { HomePageRoutingModule } from './home.router.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    ChatPageModule
   ],
   declarations: [HomePage]
 })

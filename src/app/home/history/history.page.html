@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>История заказов</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let data of mocked">
+    <ion-item>
+        <ion-icon name="pizza" slot="start"></ion-icon>
+        <ion-card-title>{{data.order}}, {{data.date}}</ion-card-title>
+    </ion-item>
+
+    <ion-card-content>
+    Описание начинки: {{data?.filling}} {{data?.mushrooms}} {{data?.cheese}}
+      <p>Размер: {{data?.size}}</p>
+      <p>Примечания: {{data?.note}}</p>
+      <p>Количество: {{data.quantity}}</p>
+    </ion-card-content>
+  </ion-card>
+<!--  <ion-infinite-scroll *ngIf="!isLoaded">-->
+<!--    <ion-infinite-scroll-content>-->
+<!--    </ion-infinite-scroll-content>-->
+<!--  </ion-infinite-scroll>-->
+</ion-content>

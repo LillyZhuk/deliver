@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './services/auth.guard';
+
 
 const routes: Routes = [
   {
@@ -7,8 +9,8 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  {path: 'home', loadChildren: './home/home.module#HomePageModule'},
-  { path: 'profile', loadChildren: './component/profile/profile.module#ProfilePageModule' },
+  { path: 'home', canActivate: [AuthGuard], loadChildren: './home/home.module#HomePageModule' },
+  { path: 'profile', canActivate: [AuthGuard], loadChildren: './component/profile/profile.module#ProfilePageModule' },
 ];
 
 @NgModule({

@@ -17,6 +17,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { firebaseConfig } from './core/config';
 
 import { IonicStorageModule } from '@ionic/storage';
+import {AuthGuard} from './services/auth.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { IonicStorageModule } from '@ionic/storage';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+      AuthGuard
   ],
   bootstrap: [AppComponent]
 })

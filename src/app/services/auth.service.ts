@@ -1,31 +1,42 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {AngularFireAuth} from '@angular/fire/auth';
-import * as firebase from 'firebase/app';
-import AuthProvider = firebase.auth.AuthProvider;
+import { BASE_URL } from '../core/config';
+import {Storage} from '@ionic/storage';
+import { Token } from '../component/models/token.model';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private user: firebase.User;
+  public token: string;
 
   constructor(
       private http: HttpClient,
-      public afAuth: AngularFireAuth
-  ) {
-    afAuth.authState.subscribe(user => {
-      this.user = user;
-    });
+      private storage: Storage,
+      private router: Router
+  ) { }
+
+  loginUser(credentials): Observable<Token> {
+    return this.http.post<Token>(`${BASE_URL}login`, credentials);
   }
 
-  loginUser(credentials) {
-    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+  registrUser(credentials): Observable<Token> {
+    return this.http.post<Token>(`${BASE_URL}register`, credentials);
   }
 
-  registrUser(credentials) {
-    console.log(credentials, 'auth')
-    return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password);
+  logOut() {
+    this.storage.clear();
+    this.router.navigateByUrl('/login');
   }
+
+  loggenIn(): boolean {
+    // return (localStorage.getItem('token') !== null);
+    if (this.storage.get('token')) {
+      return true;
+    }
+    return false;
+  }
+
 }

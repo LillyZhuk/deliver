@@ -6,6 +6,7 @@ import {ListCafePage} from './list-cafe/list-cafe.page';
 import {HistoryPage} from './history/history.page';
 import {ChatPage} from './chat/chat.page';
 
+
 const routes: Routes = [
     {
         path: 'home',

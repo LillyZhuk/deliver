@@ -9,3 +9,5 @@ export const firebaseConfig = {
         appId: '1:303497092967:web:7831bef8a830a0d8'
     }
 };
+
+export const BASE_URL = 'http://192.168.1.227:8081/';

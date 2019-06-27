@@ -12,7 +12,8 @@ import { IonicPage } from 'ionic-angular';
 })
 export class RegistrationComponent implements OnInit {
 
-  private form: FormGroup;
+  public form: FormGroup;
+  public loading: boolean = false;
 
   constructor(
       private authService: AuthService,
@@ -31,10 +32,18 @@ export class RegistrationComponent implements OnInit {
   OnSubmit() {
     let credentials = {
       email: this.form.value.email,
-      password: this.form.value.password
+      password: this.form.value.password,
+      name: this.form.value.name
     };
-    console.log(credentials)
-    this.authService.registrUser(credentials);
+    this.loading = true;
+    this.authService.registrUser(credentials).subscribe(
+        data => {
+          this.router.navigate(['/login']);
+        },
+        error => {
+          this.loading = false;
+        }
+    );
   }
 
 }

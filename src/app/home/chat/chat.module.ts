@@ -6,8 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ChatPage } from './chat.page';
-import { DialogComponent } from './dialog/dialog.component';
-import {IonicPageModule} from 'ionic-angular';
+
+import {DialogPage} from './dialog/dialog.page';
+// import {DialogPageModule} from './dialog/dialog.module';
 
 const routes: Routes = [
   {
@@ -16,8 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'chat/:id',
-    component: DialogComponent
-  }
+    component: DialogPage
+  },
 ];
 
 @NgModule({
@@ -26,8 +27,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    IonicPageModule
+    // DialogPageModule
   ],
-  declarations: [ChatPage, DialogComponent]
+  declarations: [ChatPage, DialogPage]
 })
 export class ChatPageModule {}

@@ -14,7 +14,9 @@ import { HomePageModule } from './home/home.module';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { firebaseConfig } from './component/core/config';
+import { firebaseConfig } from './core/config';
+
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +29,8 @@ import { firebaseConfig } from './component/core/config';
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig.fire),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    IonicStorageModule.forRoot()
   ],
   providers: [
     StatusBar,

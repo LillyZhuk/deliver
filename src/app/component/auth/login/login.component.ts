@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { IonicPage } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -16,27 +17,31 @@ export class LoginComponent implements OnInit {
 
   constructor(
       private authService: AuthService,
-      private router: Router
+      private router: Router,
+      private storage: Storage
   ) { }
 
   ngOnInit() {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.pattern('[a-zA-Z0-9 ]*')]),
-      remember: new FormControl(false, [Validators.requiredTrue])
+      remember: new FormControl(false)
     });
   }
 
   OnSubmit() {
+    console.log(this.form);
     let credentials = {
       email: this.form.value.email,
       password: this.form.value.password
     };
-    if (!credentials.email) {
-      return;
-    }
     this.authService.loginUser(credentials).then(
-        () => this.router.navigateByUrl('home')
+        () => {
+         this.router.navigateByUrl('home');
+          if (this.form.value.remember) {
+            this.storage.set('token', 'token');
+          }
+        }
     );
   }
 

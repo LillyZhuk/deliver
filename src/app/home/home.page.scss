@@ -1,5 +1,18 @@
 ion-toolbar {
-  --ion-background-color: #83d9ea;
+  --ion-background-color: #c8fcfc;
   --ion-color: white;
+}
+
+ion-tab-bar {
+  --ion-background-color: #e6aaff;
+  --ion-color: white;
+}
+
+ion-tab-button {
+  --background: var(--ion-tab-bar-background,var(--ion-background-color,#fff));
+  --background-focused: var(--ion-tab-bar-background-focused,#e0e0e0);
+  --border: 1px solid var(--ion-tab-bar-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.07))));
+  --color: var(--ion-tab-bar-color,var(--ion-color-step-600,#000));
+  --color-selected: var(--ion-tab-bar-color-activated,var(--ion-color-primary-contrast,#fff));
 }
 

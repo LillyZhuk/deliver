@@ -4,3 +4,31 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
+
+ion-item,
+ion-menu-toggle,
+ion-list {
+  --ion-background-color: none;
+}
+
+ion-toolbar {
+  height: auto;
+}
+
+.info {
+  margin: 3% 0 3% 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+#avatar,
+#name {
+  margin-bottom: 1%;
+}
+
+#name {
+  font-size: 15px
+}
+#email {
+  font-size: 12px
+}

@@ -6,6 +6,7 @@ import {AuthComponent} from './auth.component';
 import {AuthRoutingModule} from './auth-routing.module';
 import {IonicModule} from '@ionic/angular';
 import {ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     imports: [
         AuthRoutingModule,
         IonicModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CommonModule
     ]
 })
 export class AuthModule {}

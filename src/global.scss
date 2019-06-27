@@ -14,6 +14,21 @@
   margin: 0;
   padding: 0;
 }
+
+//$firstColor: #cc8bff;
+//$secondColor: #c8fcfc;
+
 body {
-  --ion-background-color: linear-gradient(0deg, #7941bf, #83d9ea);
+  --ion-background-color: linear-gradient(0deg, #e6aaff, #dbfcfc);
 }
+
+ion-toolbar {
+  --ion-background-color: #dbfcfc;
+}
+
+ion-title {
+  text-align: center;
+  color: black;
+}
+
+// a6fbfc

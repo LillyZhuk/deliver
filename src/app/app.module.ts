@@ -10,14 +10,18 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './component/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
-import { HomePageModule } from './home/home.module';
+import { HomePageModule } from './pages/home/home.module';
 
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { firebaseConfig } from './core/config';
+// import { AngularFireModule } from '@angular/fire';
+// import { AngularFireAuthModule } from '@angular/fire/auth';
+// import { firebaseConfig } from './core/config';
 
 import { IonicStorageModule } from '@ionic/storage';
-import {AuthGuard} from './services/auth.guard';
+import { AuthGuard } from './services/auth.guard';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
+import { CoreModule } from './component/core.module';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,15 +33,15 @@ import {AuthGuard} from './services/auth.guard';
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    AngularFireModule.initializeApp(firebaseConfig.fire),
-    AngularFireAuthModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    CoreModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-      AuthGuard
+    AuthGuard,
+    NativeStorage
   ],
   bootstrap: [AppComponent]
 })

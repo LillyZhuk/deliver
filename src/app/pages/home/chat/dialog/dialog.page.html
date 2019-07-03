@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> <ion-icon name="arrow-back" style="zoom:1.5;" (click)="goBack()" id="arrow"></ion-icon>User Name</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="chat-box">
+      <div class="message-area">
+        <div class="message" *ngFor="let message of messages" [ngClass]="getClasses(message.type)">
+          <p>{{message.text}}</p>
+        </div>
+      </div>
+      <div class="emo-area">
+        <app-emoji-panel [showEmojis]="showEmojis" [result]="score"></app-emoji-panel>
+      </div>
+      <div class="input-area">
+        <form name="messageForm" (submit)="sendMessage()" name="messageForm" #messageForm="ngForm">
+          <ion-input type="text" name="message" id="message" [(ngModel)]="message" placeholder="Say something ..."></ion-input>
+          <button>
+            <ion-icon name="send" id="send-msg"></ion-icon>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+

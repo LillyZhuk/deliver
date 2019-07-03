@@ -2,28 +2,26 @@ import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSta
 import {Observable} from 'rxjs';
 import {AuthService} from './auth.service';
 import {Injectable} from '@angular/core';
-import {Storage} from '@ionic/storage';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
 
     constructor(
-        private authService: AuthService,
+        public authService: AuthService,
         private router: Router,
-        private storage: Storage,
     ) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        if (this.authService.loggenIn()) {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        const currentUser = this.authService.isLoggedIn;
+        if (currentUser) {
+            // authorised so return true
             return true;
-        } else {
-            this.storage.remove('token');
-            this.router.navigateByUrl('auth');
-            return false
         }
+        this.router.navigate(['/login']);
+        return false;
     }
 
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         return this.canActivate(childRoute, state);
     }
 }

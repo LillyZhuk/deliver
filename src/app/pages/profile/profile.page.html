@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> <ion-icon name="arrow-back" style="zoom:1.5;" routerLink="/home"></ion-icon> Профиль</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div class="person-info">
+        <form #formCtrl="ngForm">
+            <div align="center" *ngIf="formCtrl.form.valid">
+                <ion-avatar>
+                    <img src="{{imgAvatar ? imgAvatar : secondImg}}">
+                </ion-avatar>
+                <h4>{{person.name}}</h4>
+                <h5>{{person.age}} лет</h5>
+            </div>
+            <ion-list>
+                <ion-item>
+                    <ion-label floating>День рождения:</ion-label>
+<!--                    <ion-input type="text" [(ngModel)]="person.birthData" name="birthData" required></ion-input>-->
+                    <ion-datetime displayFormat="DD.MM.YY" [(ngModel)]="person.birthData" [ngModelOptions]="{standalone: true}"></ion-datetime>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label floating>Телефон: </ion-label>
+                    {{person.tele}}
+<!--                    <ion-input type="text" [(ngModel)]="person.tele" name="tele" required></ion-input>-->
+                </ion-item>
+
+                <ion-item>
+                    <ion-label floating>Почта: </ion-label>
+                    {{person.email}}
+<!--                    <ion-input type="text" [(ngModel)]="person.email" name="email" required></ion-input>-->
+                </ion-item>
+
+                <ion-item>
+                    <ion-label floating>Биография:</ion-label>
+                    <ion-textarea type="text" [(ngModel)]="person.bio" name="name" required></ion-textarea>
+                </ion-item>
+            </ion-list>
+        </form>
+    </div>
+
+</ion-content>

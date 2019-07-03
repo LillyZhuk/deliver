@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> <ion-icon name="arrow-back" style="zoom:1.5;" routerLink="/home"></ion-icon>Настройки</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button color="secondary" expand="block" (click)="showDivPass()">Изменить пароль</ion-button>
+    <app-changes *ngIf="showChangesPass" [title]="titlePass" (newValue)="changeValue($event)"></app-changes>
+  <ion-button color="secondary" expand="block" (click)="showDivEmail()">Изменить почту/телефон</ion-button>
+    <app-changes *ngIf="showChangesEmail" [title]="titleEmail" (newValue)="changeValue($event)"></app-changes>
+  <ion-button color="secondary" expand="block">Изменить имя</ion-button>
+
+</ion-content>

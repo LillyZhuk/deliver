@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -18,17 +18,12 @@ export class AppComponent {
     {
       title: ' Профиль',
       url: '/profile',
-      icon: 'c'
+      icon: 'person'
     },
     {
       title: ' Настройки',
       url: '/setting',
       icon: 'build'
-    },
-    {
-      title: ' Выйти',
-      url: '/login',
-      icon: 'arrow-back'
     }
   ];
 
@@ -36,7 +31,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private menuCtrl: MenuController,
   ) {
     this.initializeApp();
   }
@@ -44,11 +40,13 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      // this.splashScreen.hide();
+      this.authService.getToken();
     });
   }
 
   logout() {
     this.authService.logOut();
+    this.menuCtrl.enable(false);
   }
 }

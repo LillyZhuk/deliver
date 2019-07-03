@@ -37,10 +37,13 @@ export class LoginComponent implements OnInit {
     };
     this.authService.loginUser(credentials).subscribe(
         data => {
+          console.log('Welcome');
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
           this.router.navigateByUrl('home');
-          if (this.form.value.remember) {
-            this.storage.set('token', data.token);
-          }
         }
     );
   }

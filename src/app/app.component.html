@@ -18,26 +18,21 @@
       </ion-header>
       <ion-content>
         <ion-list>
-          <ion-menu-toggle auto-hide="false">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/profile']">
-              <ion-icon slot="start" name="person"></ion-icon>
-              <ion-label>
-                Профиль
+          <ion-menu-toggle auto-hide="false" *ngFor="let page of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[page.url]">
+              <ion-icon slot="start" [name]="page.icon"></ion-icon>
+              <ion-label class="ion-padding-left">
+                {{page.title}}
               </ion-label>
-            </ion-item>
-            <ion-item [routerDirection]="'root'" [routerLink]="['/setting']">
-              <ion-icon slot="start" name="build"></ion-icon>
-              <ion-label>
-                Настройки
-              </ion-label>
-            </ion-item>
-            <ion-item [routerDirection]="'root'" [routerLink]="['/login']" (click)="logout()">
-              <ion-icon slot="start" name="arrow-back"></ion-icon>
-              <ion-label>
-                Выйти
-              </ion-label>
+              <i class="arrow right"></i>
             </ion-item>
           </ion-menu-toggle>
+          <ion-item (click)="logout()">
+            <ion-icon slot="start" name="log-out"></ion-icon>
+            <ion-label class="ion-padding-left">
+              Logout
+            </ion-label>
+          </ion-item>
         </ion-list>
       </ion-content>
     </ion-menu>

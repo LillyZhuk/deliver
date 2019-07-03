@@ -32,3 +32,20 @@ ion-toolbar {
 #email {
   font-size: 12px
 }
+
+.ion-padding-left {
+  padding-left: 3%;
+}
+
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  margin-right: 1px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}

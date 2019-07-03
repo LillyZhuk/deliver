@@ -9,8 +9,9 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  { path: 'home', canActivate: [AuthGuard], loadChildren: './home/home.module#HomePageModule' },
-  { path: 'profile', canActivate: [AuthGuard], loadChildren: './component/profile/profile.module#ProfilePageModule' },
+  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule', canActivate: [AuthGuard]},
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule', canActivate: [AuthGuard] },
+  { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule', canActivate: [AuthGuard] },
 ];
 
 @NgModule({

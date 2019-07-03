@@ -1,0 +1,8 @@
+<div class="main-container">
+  <ion-title>Изменить {{title}}</ion-title>
+  <form [formGroup]="form">
+    <ion-input placeholder="Введите новые данные" formControlName="text"></ion-input>
+    <ion-input placeholder="Подтвердите" formControlName="retext"></ion-input>
+    <ion-button size="small" (click)="change()" [disabled]="!form.valid">Изменить</ion-button>
+  </form>
+</div>

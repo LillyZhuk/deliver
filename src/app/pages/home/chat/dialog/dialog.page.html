@@ -16,10 +16,11 @@
         <app-emoji-panel [showEmojis]="showEmojis" [result]="score"></app-emoji-panel>
       </div>
       <div class="input-area">
-        <form name="messageForm" (submit)="sendMessage()" name="messageForm" #messageForm="ngForm">
-          <ion-input type="text" name="message" id="message" [(ngModel)]="message" placeholder="Say something ..."></ion-input>
+<!--        <form name="messageForm" (submit)="sendMessage()" name="messageForm" #messageForm="ngForm">-->
+          <form name="messageForm"  name="messageForm">
+          <ion-input type="text" name="message" id="message" [(ngModel)]="message.text" placeholder="Say something ..."></ion-input>
           <button>
-            <ion-icon name="send" id="send-msg"></ion-icon>
+            <ion-icon name="send" id="send-msg" (click)="sendMessage()"></ion-icon>
           </button>
         </form>
       </div>

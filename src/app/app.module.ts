@@ -21,6 +21,7 @@ import { AuthGuard } from './services/auth.guard';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { CoreModule } from './component/core.module';
+import { ChatService } from './services/chat.service';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { CoreModule } from './component/core.module';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthGuard,
-    NativeStorage
+    NativeStorage,
+    ChatService
   ],
   bootstrap: [AppComponent]
 })

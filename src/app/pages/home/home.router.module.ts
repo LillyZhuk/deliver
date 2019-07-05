@@ -5,49 +5,19 @@ import { HomePage } from './home.page';
 
 
 const routes: Routes = [
-    {
-        path: 'home',
-        component: HomePage,
-        children: [
-            {
-                path: 'list-cafe',
+    { path: 'home', component: HomePage, children: [
+            { path: 'list-cafe',
                 children: [
-                    {
-                        path: '',
-                        loadChildren: './list-cafe/list-cafe.module#ListCafePageModule'
-                    }
+                { path: '', loadChildren: './list-cafe/list-cafe.module#ListCafePageModule'}
                 ]
-            },
-            {
-                path: 'history',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: './history/history.module#HistoryPageModule'
-                    }
-                ]
-            },
-            {
-                path: 'chat',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: './chat/chat.module#ChatPageModule'
-                    }
-                ]
-            },
-            {
-                path: '',
-                redirectTo: '/home/list-cafe',
-                pathMatch: 'full'
-            }
+            }, { path: 'history', children: [
+                { path: '', loadChildren: './history/history.module#HistoryPageModule'}]
+            }, { path: 'chat', children: [
+                { path: '', loadChildren: './chat/chat.module#ChatPageModule'}]
+            }, { path: '', redirectTo: '/home/list-cafe', pathMatch: 'full'}
         ]
     },
-    {
-        path: '',
-        redirectTo: '/home/list-cafe',
-        pathMatch: 'full'
-    }
+    { path: '', redirectTo: '/home/list-cafe', pathMatch: 'full'}
 ];
 
 @NgModule({

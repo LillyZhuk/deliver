@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AuthService } from './services/auth.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,9 @@ export class AppComponent {
 
   first: './../assets/21225eba3212c72693d955dc1052fa5e_drawn-little-girl-braid-tumblr-pencil-and-in-color-drawn-little-little-girl-drawing-tumblr_720-713.jpeg';
   public secondImg = '../../../assets/dba6bae8c566f9d4041fb9cd9ada7741.png';
+  public name: string;
+  public email: string;
+  public phone: string;
   public appPages = [
     {
       title: ' Профиль',
@@ -34,8 +38,10 @@ export class AppComponent {
     private statusBar: StatusBar,
     private authService: AuthService,
     private menuCtrl: MenuController,
+    private storage: Storage
   ) {
     this.initializeApp();
+    this.getData();
   }
 
   initializeApp() {
@@ -49,5 +55,13 @@ export class AppComponent {
   logout() {
     this.authService.logOut();
     this.menuCtrl.enable(false);
+  }
+
+  getData() {
+    this.storage.get('user').then(value => {
+      this.name = value.login;
+      this.email = value.email;
+      this.phone = value.phone;
+    });
   }
 }

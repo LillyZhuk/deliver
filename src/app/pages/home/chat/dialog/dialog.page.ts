@@ -17,21 +17,22 @@ import 'rxjs/add/operator/takeWhile';
 })
 export class DialogPage implements OnInit {
 
-  public messages: Array<Message> = [
-    {
-      text: 'hi!',
-      type: 'outgoing',
-    },
-    {
-      text: 'hello',
-      type: 'incoming',
-    }
-  ];
-  // public messages: string[] = [];
-  public message = {
-    text: '',
-    type: ''
-  };
+  // public messages: Array<Message> = [
+  //   {
+  //     text: 'hi!',
+  //     type: 'outgoing',
+  //   },
+  //   {
+  //     text: 'hello',
+  //     type: 'incoming',
+  //   }
+  // ];
+  public messages: string[] = [];
+  // public message = {
+  //   text: '',
+  //   type: ''
+  // };
+  public message: string;
   secretCode: string;
   endConversationCode: string;
 
@@ -50,9 +51,9 @@ export class DialogPage implements OnInit {
   }
 
   sendMessage() {
-    this.message.type = 'outgoing';
-    // this.chatService.sendMessage(message);
-    this.messages.push(this.message);
+    // this.message.type = 'outgoing';
+    this.chatService.sendMessage(this.message);
+    // this.messages.push(this.message);
   }
 
   ngOnInit() {
@@ -60,20 +61,20 @@ export class DialogPage implements OnInit {
   }
 
   getMessage() {
-    // this.chatService.getMessages()
-    //     .distinctUntilChanged()
-    //     .filter((message: string) => message.trim().length > 0)
-    //     .throttleTime(1000)
-    //     .takeWhile((message) => message !== this.endConversationCode)
-    //     .skipWhile((message) => message !== this.secretCode)
-    //     .scan((acc: string, message: string, index: number) =>
-    //         `${message}(${index + 1})`
-    //     )
-    //     .subscribe((message: string) => {
-    //       const currentTime = moment().format('hh:mm:ss a');
-    //       const messageWithTimestamp = `${currentTime}: ${message}`;
-    //       this.messages.push(messageWithTimestamp);
-    //     });
+    this.chatService.getMessages()
+        .distinctUntilChanged()
+        .filter((message: string) => message.trim().length > 0)
+        .throttleTime(1000)
+        .takeWhile((message) => message !== this.endConversationCode)
+        .skipWhile((message) => message !== this.secretCode)
+        .scan((acc: string, message: string, index: number) =>
+            `${message}(${index + 1})`
+        )
+        .subscribe((message: string) => {
+          const currentTime = moment().format('hh:mm:ss a');
+          const messageWithTimestamp = `${currentTime}: ${message}`;
+          this.messages.push(messageWithTimestamp);
+        });
   }
 
   getClasses(messageType) {

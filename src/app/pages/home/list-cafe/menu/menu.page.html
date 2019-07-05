@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-row >
-    <ion-col size="6" *ngFor="let m of menu">
+    <ion-col size="6" *ngFor="let m of menu" (click)="presentModal()">
       <ion-card>
         <ion-img [src]="m.img"></ion-img>
         <ion-card-content>

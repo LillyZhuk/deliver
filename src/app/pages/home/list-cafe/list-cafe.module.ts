@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ListCafePage } from './list-cafe.page';
 import { MenuPage } from './menu/menu.page';
+// import { ModalPage } from './modal/modal.page';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     component: ListCafePage
   },
   {
-    path: 'list-cafe/:id',
+    path: 'list-cafe/:cafeId',
     component: MenuPage
   },
 ];
@@ -26,6 +27,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ListCafePage, MenuPage]
+  declarations: [ListCafePage, MenuPage],
+  // entryComponents: [ModalPage],
+
 })
 export class ListCafePageModule {}

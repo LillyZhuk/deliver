@@ -22,6 +22,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { CoreModule } from './component/core.module';
 import { ChatService } from './services/chat.service';
+import { ProfileService } from './services/profile.service';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { ChatService } from './services/chat.service';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthGuard,
     NativeStorage,
-    ChatService
+    ChatService,
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

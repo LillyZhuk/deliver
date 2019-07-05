@@ -10,7 +10,7 @@ export class ChatService {
     }
 
     public sendMessage(message) {
-        console.log(message, 'service')
+        console.log(message, 'service');
         this.socket.emit('new-message', message);
     }
 
@@ -20,7 +20,7 @@ export class ChatService {
                 observer.next(message);
             });
         });
-    }
+    };
 
     public onEvent(event): Observable<any> {
         return new Observable<any>(observer => {

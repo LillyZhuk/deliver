@@ -10,6 +10,7 @@ import { ListCafePageModule } from './list-cafe/list-cafe.module';
 import { HomePageRoutingModule } from './home.router.module';
 
 import { ChatService } from '../../services/chat.service';
+import {ModalPage} from './list-cafe/modal/modal.page';
 
 @NgModule({
   imports: [
@@ -20,7 +21,9 @@ import { ChatService } from '../../services/chat.service';
     ChatPageModule,
     ListCafePageModule
   ],
-  declarations: [HomePage],
-  // providers: [ChatService]
+  declarations: [HomePage, ModalPage],
+  exports: [ModalPage],
+  entryComponents: [ModalPage],
+  providers: [ChatService]
 })
 export class HomePageModule {}

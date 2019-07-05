@@ -21,7 +21,7 @@ export class AuthService {
   ) { }
 
   loginUser(credentials) {
-    return this.http.post(`${BASE_URL}login`, credentials).pipe(
+    return this.http.post(`${BASE_URL}/auth/login`, credentials).pipe(
         tap(token => {
           this.storage.set('token', token)
               .then(
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   registrUser(credentials) {
-    return this.http.post(`${BASE_URL}register`, credentials);
+    return this.http.post(`${BASE_URL}/auth/register`, credentials);
   }
 
   logOut() {

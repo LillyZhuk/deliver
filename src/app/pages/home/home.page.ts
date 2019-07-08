@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { ProfileService } from '../../services/profile.service';
 
@@ -7,7 +7,7 @@ import { ProfileService } from '../../services/profile.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, AfterViewInit {
 
   constructor(
       private menu: MenuController,
@@ -17,9 +17,13 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.profileService.getProfile().subscribe(
+
+  }
+
+  public ngAfterViewInit(): void {
+    this.profileService.someMethod().subscribe(
         data => {
-          console.log(data)
+          console.log(data);
         }
     );
   }

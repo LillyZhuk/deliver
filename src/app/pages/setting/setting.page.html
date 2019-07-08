@@ -9,6 +9,7 @@
     <app-changes *ngIf="showChangesPass" [title]="titlePass" (newValue)="changeValue($event)"></app-changes>
   <ion-button color="secondary" expand="block" (click)="showDivEmail()">Изменить почту/телефон</ion-button>
     <app-changes *ngIf="showChangesEmail" [title]="titleEmail" (newValue)="changeValue($event)"></app-changes>
-  <ion-button color="secondary" expand="block">Изменить имя</ion-button>
+  <ion-button color="secondary" expand="block" (click)="showDivName()">Изменить имя</ion-button>
+    <app-changes *ngIf="showChangesName" [title]="titleName" (newValue)="changeValue($event)"></app-changes>
 
 </ion-content>

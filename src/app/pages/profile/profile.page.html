@@ -13,18 +13,17 @@
                     <img src="{{imgAvatar ? imgAvatar : secondImg}}">
                 </ion-avatar>
                 <h4>{{person.name}}</h4>
-                <h5>{{person.age}} лет</h5>
+                <h5>{{age}} лет</h5>
             </div>
             <ion-list>
                 <ion-item>
                     <ion-label floating>День рождения:</ion-label>
-<!--                    <ion-input type="text" [(ngModel)]="person.birthData" name="birthData" required></ion-input>-->
-                    <ion-datetime displayFormat="DD.MM.YY" [(ngModel)]="person.birthData" [ngModelOptions]="{standalone: true}"></ion-datetime>
+                    <ion-datetime displayFormat="DD.MM.YY" [(ngModel)]="person.birthday" [ngModelOptions]="{standalone: true}"></ion-datetime>
                 </ion-item>
 
                 <ion-item>
                     <ion-label floating>Телефон: </ion-label>
-                    {{person.tele}}
+                    {{person.phone}}
 <!--                    <ion-input type="text" [(ngModel)]="person.tele" name="tele" required></ion-input>-->
                 </ion-item>
 

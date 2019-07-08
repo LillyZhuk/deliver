@@ -9,8 +9,10 @@ export class SettingPage implements OnInit {
 
   public showChangesPass: boolean = false;
   public showChangesEmail: boolean = false;
+  public showChangesName: boolean = false;
   public titlePass: string = 'пароль';
   public titleEmail: string = 'почту/телефон';
+  public titleName: string = 'имя';
   private title: string;
 
   constructor() { }
@@ -19,19 +21,24 @@ export class SettingPage implements OnInit {
   }
 
   showDivPass() {
-    if (this.showChangesEmail) {
-      this.showChangesEmail = false;
-    }
+    this.showChangesEmail = false;
+    this.showChangesName = false;
     this.showChangesPass = !this.showChangesPass;
     this.title = this.titlePass;
   }
 
   showDivEmail() {
-    if (this.showChangesPass) {
-      this.showChangesPass = false;
-    }
+    this.showChangesPass = false;
+    this.showChangesName = false;
     this.showChangesEmail = !this.showChangesEmail;
     this.title = this.titleEmail;
+  }
+
+  showDivName() {
+    this.showChangesPass = false;
+    this.showChangesEmail = false;
+    this.showChangesName = !this.showChangesName;
+    this.title = this.titleName;
   }
 
   changeValue(newValue) {

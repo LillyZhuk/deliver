@@ -9,10 +9,13 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule', canActivate: [AuthGuard]},
-  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule', canActivate: [AuthGuard] },
-  { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule', canActivate: [AuthGuard] },
-  { path: 'modal', loadChildren: './pages/home/list-cafe/modal/modal.module#ModalPageModule' },
+  // { path: 'home', loadChildren: './pages/home/home.module#HomePageModule', canActivate: [AuthGuard]},
+  // { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule', canActivate: [AuthGuard] },
+  // { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule', canActivate: [AuthGuard] },
+  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule'},
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
+  { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule' },
+  // { path: 'modal', loadChildren: './pages/home/list-cafe/modal/modal.module#ModalPageModule' },
 ];
 
 @NgModule({

@@ -5,14 +5,7 @@ import { Storage } from '@ionic/storage';
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs-compat/add/operator/mergeMap';
-
-export interface Profile {
-    birthday: string;
-    phone: string;
-    bio: string;
-    login: string;
-    email: string;
-}
+import { Profile } from '../component/models/profile.model';
 
 
 @Injectable({
@@ -21,29 +14,32 @@ export interface Profile {
 export class ProfileService {
 
   public headers;
-  public token;
 
   constructor(
       private http: HttpClient,
       private storage: Storage
   ) {
-      this.getToken();
+     // this.getToken();
   }
 
-    getToken(): void {
-        this.storage.get('token').then(val => {
-            this.headers = new HttpHeaders().set('token', val);
-            this.someMethod().subscribe(
-                data => {
-                    console.log(data);
-                }
-            );
-        });
-    }
+  // getToken(): void {
+  //     this.storage.get('token').then(val => {
+  //        this.headers = new HttpHeaders().set('token', val);
+  //        this.getProfile(this.headers);
+  //     });
+  // }
 
-    public someMethod(): Observable<Profile> {
-        return this.http.get<Profile>(`${BASE_URL}/profile`, {
-            headers: this.headers
-        });
-    }
+  public getProfile(token): Observable<Profile> {
+      this.headers = new HttpHeaders().set('token', token);
+      return this.http.get<Profile>(`${BASE_URL}/profile`, {
+          headers: this.headers
+      });
+  }
+
+  public editProgile(token): Observable<Profile> {
+      this.headers = new HttpHeaders().set('token', token);
+      return this.http.put<Profile>(`${BASE_URL}/profile`, {
+          headers: this.headers
+      });
+  }
 }

@@ -1,11 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>История заказов</ion-title>
+    <ion-title *ngIf="userRole === 'user'">История заказов</ion-title>
+    <ion-title *ngIf="userRole === 'admin'">Заказы</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-card *ngFor="let data of mocked">
+<ion-content *ngIf="userRole === 'user'">
+  <ion-card *ngFor="let data of mocked" [ngClass]="getClasses(data.status)">
     <ion-item>
         <ion-icon name="pizza" slot="start"></ion-icon>
         <ion-card-title>{{data.order}}, {{data.date}}</ion-card-title>
@@ -18,8 +19,22 @@
       <p>Количество: {{data.quantity}}</p>
     </ion-card-content>
   </ion-card>
-<!--  <ion-infinite-scroll *ngIf="!isLoaded">-->
-<!--    <ion-infinite-scroll-content>-->
-<!--    </ion-infinite-scroll-content>-->
-<!--  </ion-infinite-scroll>-->
+</ion-content>
+
+<ion-content *ngIf="userRole === 'admin'">
+  <ion-card *ngFor="let data of mockedAdmin">
+    <ion-item class="admin-style">
+        <ion-icon name="restaurant" slot="start"></ion-icon>
+        <ion-card-title>{{data.user}}</ion-card-title>
+      <ion-button (click)="takeOrder(data)" [disabled]="data.status">Принять</ion-button>
+    </ion-item>
+
+    <ion-card-content>
+      <ion-card-title>{{data.order}}</ion-card-title>
+      Описание начинки: {{data?.filling}} {{data?.mushrooms}} {{data?.cheese}}
+      <p>Размер: {{data?.size}}</p>
+      <p>Примечания: {{data?.note}}</p>
+      <p>Количество: {{data.quantity}}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

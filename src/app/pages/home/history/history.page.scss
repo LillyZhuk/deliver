@@ -1,5 +1,21 @@
 .sc-ion-card-md-h {
   --background:  rgba(255,255,255,.4);
-
 }
 
+//.accepted {
+//  border: 2px solid orangered;
+//}
+
+.accepted {
+  animation: colorchange 10s; /* animation-name followed by duration in seconds*/
+  /* you could also use milliseconds (ms) or something like 2.5s */
+  -webkit-animation: colorchange 10s;
+}
+
+@keyframes colorchange {
+  0%   {border: 2px solid #ff6955;}
+  25%  {border: 2px solid yellow;}
+  50%  {border: 2px solid #47ff02;}
+  75%  {border: 2px solid #6857ff;}
+  100% {border: 2px solid #ff6955;}
+}

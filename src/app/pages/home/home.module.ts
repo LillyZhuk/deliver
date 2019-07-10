@@ -10,7 +10,8 @@ import { ListCafePageModule } from './list-cafe/list-cafe.module';
 import { HomePageRoutingModule } from './home.router.module';
 
 import { ChatService } from '../../services/chat.service';
-import {ModalPage} from './list-cafe/modal/modal.page';
+import { ModalPage } from './list-cafe/modal/modal.page';
+
 
 @NgModule({
   imports: [

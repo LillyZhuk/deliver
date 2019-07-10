@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(credentials).subscribe(
         data => {
           console.log('Welcome');
+          this.storage.set('role', 'admin');
         },
         error => {
           console.log(error);

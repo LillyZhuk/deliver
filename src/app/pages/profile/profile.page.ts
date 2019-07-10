@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ProfileService } from '../../services/profile.service';
 import { Storage } from '@ionic/storage';
 import { Profile } from '../../component/models/profile.model';
+import * as moment from 'moment';
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-profile',
@@ -15,10 +17,12 @@ export class ProfilePage implements OnInit {
     public secondImg = '../../../assets/dba6bae8c566f9d4041fb9cd9ada7741.png';
     public person: Profile;
     public age;
+    public isLoaded: boolean = false;
 
   constructor(
       private profileService: ProfileService,
-      private storage: Storage
+      private storage: Storage,
+      private elementRef: ElementRef
   ) { }
 
   ngOnInit() {
@@ -29,27 +33,26 @@ export class ProfilePage implements OnInit {
         this.storage.get('token').then(token => {
             // const subject = new BehaviorSubject(this.profileService.someMethod(token));
             this.profileService.getProfile(token).subscribe(data => {
-                console.log(data, 'data');
                 this.person = data;
-                this.age = this.getAge(this.person.birthday);
+                this.getAge(this.person.birthday);
+                this.isLoaded = true;
             });
         });
   }
 
   public changeUserData() {
-      // this.storage.get('token').then(token => {
-      //     this.profileService.editProgile(token).subscribe(data => {
-      //         console.log('Edit user data');
-      //     });
-      // });
-      console.log(this.person);
+      this.storage.get('token').then(token => {
+          this.profileService.editProfile(token, this.person).subscribe(data => {
+              this.getUserData();
+          });
+      });
   }
 
-    getAge(birthdate) {
-        let currentTime = new Date();
-        //     let abc = birthdate.getTime();
-        //     return ((currentTime - abc) / 31556952000).toFixed(0);
-        // }
+    public getAge(birthday): number {
+        const currentTime = new Date();
+        const birthDate: any = moment(birthday).format('x');
+        this.age = ((currentTime.getTime() - birthDate) / 31556952000).toFixed(0);
+        return this.age;
     }
 
 }

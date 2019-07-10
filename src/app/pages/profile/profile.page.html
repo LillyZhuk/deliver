@@ -6,19 +6,20 @@
 
 <ion-content>
 
-    <div class="person-info">
+    <ion-spinner color="tertiary" name="lines" *ngIf="!isLoaded"></ion-spinner>
+    <div class="person-info" *ngIf="isLoaded">
         <form #formCtrl="ngForm">
-            <div align="center" *ngIf="formCtrl.form.valid">
+            <div align="center" >
                 <ion-avatar>
                     <img src="{{imgAvatar ? imgAvatar : secondImg}}">
                 </ion-avatar>
                 <h4>{{person.name}}</h4>
                 <h5>{{age}} лет</h5>
             </div>
-            <ion-list>
+            <ion-list >
                 <ion-item>
                     <ion-label floating>День рождения:</ion-label>
-                    <ion-datetime displayFormat="DD.MM.YY" [(ngModel)]="person.birthday" [ngModelOptions]="{standalone: true}"></ion-datetime>
+                    <ion-datetime displayFormat="DD.MM.YY" [(ngModel)]="person.birthday" [ngModelOptions]="{standalone: true}" required></ion-datetime>
                 </ion-item>
 
                 <ion-item>
@@ -38,6 +39,7 @@
                     <ion-textarea type="text" [(ngModel)]="person.bio" name="name" required></ion-textarea>
                 </ion-item>
             </ion-list>
+            <ion-button (click)="changeUserData()">Изменить</ion-button>
         </form>
     </div>
 

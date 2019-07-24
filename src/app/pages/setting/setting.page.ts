@@ -48,6 +48,16 @@ export class SettingPage implements OnInit {
     if (this.title === this.titleEmail) {
       console.log('email');
     }
+    if (this.title === this.titleName) {
+      console.log('hi');
+    }
+  }
+
+  public showDiv(showChangesOne, showChangesTwo): void {
+    showChangesOne = false;
+    showChangesTwo = false;
+    this.showChangesName = !this.showChangesName;
+    this.title = this.titleName;
   }
 
 }

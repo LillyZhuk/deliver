@@ -1,7 +1,7 @@
 export interface Profile {
-    birthday: string;
+    birthday?: string;
     phone: string;
-    bio: string;
+    bio?: string;
     login: string;
     email: string;
 }

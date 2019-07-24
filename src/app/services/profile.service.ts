@@ -36,9 +36,9 @@ export class ProfileService {
       });
   }
 
-  public editProgile(token): Observable<Profile> {
+  public editProfile(token, data): Observable<Profile> {
       this.headers = new HttpHeaders().set('token', token);
-      return this.http.put<Profile>(`${BASE_URL}/profile`, {
+      return this.http.put<Profile>(`${BASE_URL}/profile`, data,{
           headers: this.headers
       });
   }

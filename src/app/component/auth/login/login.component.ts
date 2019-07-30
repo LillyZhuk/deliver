@@ -4,6 +4,8 @@ import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { IonicPage } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { User } from '../../models/user';
+import { MenuController } from '@ionic/angular';
 
 @IonicPage()
 @Component({
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit {
       private authService: AuthService,
       private router: Router,
       private storage: Storage,
+      private menuCtrl: MenuController,
   ) { }
 
   ngOnInit() {
@@ -31,21 +34,26 @@ export class LoginComponent implements OnInit {
 
   OnSubmit() {
     console.log(this.form);
-    let credentials = {
-      email: this.form.value.email,
-      password: this.form.value.password
-    };
-    this.authService.loginUser(credentials).subscribe(
+    // let credentials = {
+    //   email: this.form.value.email,
+    //   password: this.form.value.password
+    // };
+    const email = this.form.value.email;
+    const password = this.form.value.password;
+    this.router.navigateByUrl('home'); // delete
+    this.storage.set('role', 'admin');
+    this.authService.loginUser(email, password).then(
         data => {
           console.log('Welcome');
           this.storage.set('role', 'admin');
+          this.router.navigateByUrl('home');
         },
         error => {
           console.log(error);
         },
-        () => {
-          this.router.navigateByUrl('home');
-        }
+        // () => {
+        //   // this.router.navigateByUrl('home');
+        // }
     );
   }
 

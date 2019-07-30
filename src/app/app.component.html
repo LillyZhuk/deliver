@@ -7,12 +7,12 @@
 
             <div id="avatar">
               <ion-avatar slot="start" >
-                <img src="{{first ? first : secondImg}}">
+                <img src="{{person.avatar}}">
               </ion-avatar>
             </div>
 
-            <ion-label id="name">{{this.name}}</ion-label>
-            <ion-label id="email">{{this.email}}</ion-label>
+            <ion-label id="name">{{person.name}}</ion-label>
+            <ion-label id="email">{{person.email}}</ion-label>
           </div>
         </ion-toolbar>
       </ion-header>

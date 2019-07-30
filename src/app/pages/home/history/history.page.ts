@@ -231,6 +231,10 @@ export class HistoryPage implements OnInit {
     console.log(value);
   }
 
+  deleteOrder(i) {
+    this.mockedAdmin.splice(i, 1);
+  }
+
   getClasses(messageType) {
     if (!messageType) {
       return messageType = 'accepted';

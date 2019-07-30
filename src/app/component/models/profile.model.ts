@@ -1,7 +1,10 @@
 export interface Profile {
     birthday?: string;
-    phone: string;
     bio?: string;
-    login: string;
-    email: string;
+    name?: string;
+    email?: string;
+    avatar?: string;
+    nickname?: string;
+    nameToSearch: string;
+    surname?: string;
 }

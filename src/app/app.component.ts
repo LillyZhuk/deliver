@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 
 import { MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -6,18 +6,18 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AuthService } from './services/auth.service';
 import { Storage } from '@ionic/storage';
+import {ProfileService} from './services/profile.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
 
-  first: './../assets/21225eba3212c72693d955dc1052fa5e_drawn-little-girl-braid-tumblr-pencil-and-in-color-drawn-little-little-girl-drawing-tumblr_720-713.jpeg';
-  public secondImg = '../../../assets/dba6bae8c566f9d4041fb9cd9ada7741.png';
   public name: string;
   public email: string;
   public phone: string;
+  public person = {};
   public appPages = [
     {
       title: ' Профиль',
@@ -31,6 +31,7 @@ export class AppComponent {
     }
   ];
   public user;
+  public sub;
 
   constructor(
     private platform: Platform,
@@ -38,17 +39,17 @@ export class AppComponent {
     private statusBar: StatusBar,
     private authService: AuthService,
     private menuCtrl: MenuController,
+    private profileService: ProfileService,
     private storage: Storage
   ) {
     this.initializeApp();
-    this.getData();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       // this.splashScreen.hide();
-      this.authService.getToken();
+      // this.authService.getToken();
     });
   }
 
@@ -57,11 +58,23 @@ export class AppComponent {
     this.menuCtrl.enable(false);
   }
 
+  ngOnInit(): void {
+    // this.getData();
+    this.getData();
+    }
+
   getData() {
-    this.storage.get('user').then(value => {
-      this.name = value.login;
-      this.email = value.email;
-      this.phone = value.phone;
+    this.storage.get('uid').then(val => {
+      this.sub = this.profileService.getProfile(val)
+          .subscribe(querySnapshot => {
+            querySnapshot.forEach(item => {
+              this.person = item.data();
+            });
+          });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

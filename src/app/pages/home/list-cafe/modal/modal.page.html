@@ -1,9 +1,80 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>modal</ion-title>
+    <ion-title>{{data.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-button (click)="close()">Close</ion-button>
+    <div class="content">
+        <div class="order-image">
+            <ion-img [src]="data.img" id="order-img"></ion-img>
+        </div>
+        <div class="order-content">
+            <form #myForm="ngForm" novalidate (ngSubmit)="send(myForm)">
+                <ion-list>
+
+                    <ion-radio-group *ngIf="data.title === 'Денер' || data.title === 'Шаурма'">
+                        <ion-list-header class="meat-group">
+                            <ion-label class="meat-title">Выберете желаемое мясо:</ion-label>
+                        </ion-list-header>
+                        <ion-item *ngFor="let m of meatList">
+                            <ion-label>{{m.title}}</ion-label>
+                            <ion-radio slot="start"
+                                       color="{{m.color}}"
+                                       id="{{m.value}}"
+                                       value="{{m.value}}"
+                                       name="{{m.name}}"
+                                       (ionSelect)="radioSelect(m.title)">
+                            </ion-radio>
+                        </ion-item>
+                    </ion-radio-group>
+
+                    <ion-radio-group *ngIf="data.title === 'Денер' || data.title === 'Шаурма'">
+                        <ion-list-header class="meat-group">
+                            <ion-label class="meat-title">Выберете желаемые добавки:</ion-label>
+                        </ion-list-header>
+                        <ion-item *ngFor="let a of additionList">
+                            <ion-label>{{a.title}}</ion-label>
+                            <ion-checkbox mode="ios"
+                                          slot="start" color="{{a.color}}"
+                                          value="{{a.name}}"
+                                          checked="{{a.checked}}"
+                                          (ionChange)="checkEvent(a.name)"></ion-checkbox>
+                        </ion-item>
+                    </ion-radio-group>
+
+                    <ion-item>
+                        <ion-label position="stacked">Введите количество:</ion-label>
+                        <ion-input type="number" [ngModel]="1" name="quantity" #quantity="ngModel" required min="1" value="1"></ion-input>
+                    </ion-item>
+
+                    <ion-radio-group *ngIf="data.title === 'Денер' || data.title === 'Шаурма' || data.title === 'Сыр в лаваше'">
+                        <ion-list-header class="meat-group">
+                            <ion-label class="meat-title">Выберете размер:</ion-label>
+                        </ion-list-header>
+                        <ion-item *ngFor="let s of sizeList">
+                            <ion-label>{{s.title}}</ion-label>
+                            <ion-radio slot="start"
+                                       color="{{s.color}}"
+                                       id="{{s.value}}"
+                                       value="{{s.value}}"
+                                       name="{{s.name}}"
+                                       (ionSelect)="radioSelectSize(s.title)">
+                            </ion-radio>
+                        </ion-item>
+                    </ion-radio-group>
+
+                    <ion-item>
+                        <ion-label>Комментарий к заказу:</ion-label>
+                        <ion-input  [ngModel]="" name="note" #note="ngModel" required  value=""></ion-input>
+                    </ion-item>
+
+                </ion-list>
+                <div class="btn-area">
+                    <ion-button (click)="close()" color="warning">Закрыть</ion-button>
+                    <ion-button type="submit">Заказать</ion-button>
+                </div>
+            </form>
+        </div>
+    </div>
 </ion-content>

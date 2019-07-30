@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { IonicPage } from 'ionic-angular';
+import {User} from '../../models/user';
+import {ProfileService} from '../../../services/profile.service';
 
 @IonicPage()
 @Component({
@@ -14,10 +16,12 @@ export class RegistrationComponent implements OnInit {
 
   public form: FormGroup;
   public loading: boolean = false;
+  public credentials: User;
 
   constructor(
       private authService: AuthService,
       private router: Router,
+      private profileService: ProfileService,
   ) { }
 
   ngOnInit() {
@@ -30,15 +34,21 @@ export class RegistrationComponent implements OnInit {
   }
 
   OnSubmit() {
-    let credentials = {
-      email: this.form.value.email,
-      password: this.form.value.password,
-      name: this.form.value.name
-    };
+    // let credentials = {
+    //   email: this.form.value.email,
+    //   password: this.form.value.password,
+    //   name: this.form.value.name
+    // };
+    const email = this.form.value.email;
+    const password = this.form.value.password;
+    const name = this.form.value.name;
     this.loading = true;
-    this.authService.registrUser(credentials).subscribe(
+    this.authService.registerUser(email, password).then(
         data => {
+          console.log(data);
           this.router.navigate(['/login']);
+          const uid = data.user.uid;
+          this.profileService.createProfile(uid, email, name);
         },
         error => {
           this.loading = false;

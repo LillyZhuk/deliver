@@ -7,9 +7,9 @@
 //}
 
 .accepted {
-  animation: colorchange 10s; /* animation-name followed by duration in seconds*/
+  animation: colorchange 10s infinite; /* animation-name followed by duration in seconds*/
   /* you could also use milliseconds (ms) or something like 2.5s */
-  -webkit-animation: colorchange 10s;
+  -webkit-animation: colorchange 10s infinite;
 }
 
 @keyframes colorchange {
@@ -18,4 +18,10 @@
   50%  {border: 2px solid #47ff02;}
   75%  {border: 2px solid #6857ff;}
   100% {border: 2px solid #ff6955;}
+}
+
+.btn-block {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2%;
 }

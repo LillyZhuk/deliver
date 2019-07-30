@@ -11,10 +11,10 @@
         <form #formCtrl="ngForm">
             <div align="center" >
                 <ion-avatar>
-                    <img src="{{imgAvatar ? imgAvatar : secondImg}}">
+                    <img src="{{person.avatar ? person.avatar : secondImg}}">
                 </ion-avatar>
                 <h4>{{person.name}}</h4>
-                <h5>{{age}} лет</h5>
+<!--                <h5>{{age}} лет</h5>-->
             </div>
             <ion-list >
                 <ion-item>
@@ -24,7 +24,7 @@
 
                 <ion-item>
                     <ion-label floating>Телефон: </ion-label>
-                    {{person.phone}}
+<!--                    {{person.phone}}-->
 <!--                    <ion-input type="text" [(ngModel)]="person.tele" name="tele" required></ion-input>-->
                 </ion-item>
 

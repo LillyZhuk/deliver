@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   public role;
 
@@ -16,10 +16,8 @@ export class HomePage {
       private menu: MenuController,
       private profileService: ProfileService,
       private storage: Storage
-  ) {
+  ) { }
+  ngOnInit(): void {
     this.menu.enable(true);
-    this.storage.get('role').then(val => {
-      this.role = val;
-    });
   }
 }

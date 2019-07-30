@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
+import {ActivatedRoute} from '@angular/router';
+
+interface Menu {
+  id: number;
+  title: string;
+  price: number;
+  img: string;
+}
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +18,7 @@ import { ModalPage } from '../modal/modal.page';
 })
 export class MenuPage implements OnInit {
 
-  public menu = [
+  public menu: Menu[] = [
     {
       id: 1,
       title: 'Шаурма',
@@ -66,18 +74,25 @@ export class MenuPage implements OnInit {
       img: '../../../../../assets/eff84bb8115105d_600x400.jpg'
     }
   ];
+  public cafeId: number;
 
   constructor(
       private location: Location,
-      public modalController: ModalController
+      public modalController: ModalController,
+      private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.cafeId = +this.activatedRoute.snapshot.paramMap.get('cafeId');
   }
 
-  async presentModal() {
+  async presentModal(m: Menu) {
       const modal = await this.modalController.create({
-        component: ModalPage
+        component: ModalPage,
+        componentProps: {
+          menu: m,
+          cafeId: this.cafeId
+        }
       });
       return await modal.present();
     }
@@ -87,3 +102,4 @@ export class MenuPage implements OnInit {
   }
 
 }
+

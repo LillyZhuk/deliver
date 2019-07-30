@@ -1,51 +1,43 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {Component, ElementRef, OnInit, OnDestroy} from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
 import { Storage } from '@ionic/storage';
 import { Profile } from '../../component/models/profile.model';
 import * as moment from 'moment';
-import {FormGroup} from "@angular/forms";
+
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
-
-    public imgAvatar = '../../../assets/21225eba3212c72693d955dc1052fa5e_drawn-little-girl-braid-tumblr-pencil-and-in-color-drawn-little-little-girl-drawing-tumblr_720-713.jpeg';
+export class ProfilePage implements OnInit, OnDestroy {
     public secondImg = '../../../assets/dba6bae8c566f9d4041fb9cd9ada7741.png';
-    public person: Profile;
+    public person = {};
     public age;
     public isLoaded: boolean = false;
+    public sub;
 
-  constructor(
+    constructor(
       private profileService: ProfileService,
       private storage: Storage,
       private elementRef: ElementRef
   ) { }
 
   ngOnInit() {
-        this.getUserData();
+        this.getProfile();
   }
 
-  public getUserData() {
-        this.storage.get('token').then(token => {
-            // const subject = new BehaviorSubject(this.profileService.someMethod(token));
-            this.profileService.getProfile(token).subscribe(data => {
-                this.person = data;
-                this.getAge(this.person.birthday);
-                this.isLoaded = true;
-            });
+  public getProfile() {
+        this.storage.get('uid').then(val => {
+            this.sub = this.profileService.getProfile(val)
+                .subscribe(querySnapshot => {
+                    querySnapshot.forEach(item => {
+                        this.person = item.data();
+                        console.log(item.data());
+                        this.isLoaded = true;
+                    });
+                });
         });
-  }
-
-  public changeUserData() {
-      this.storage.get('token').then(token => {
-          this.profileService.editProfile(token, this.person).subscribe(data => {
-              this.getUserData();
-          });
-      });
   }
 
     public getAge(birthday): number {
@@ -53,6 +45,12 @@ export class ProfilePage implements OnInit {
         const birthDate: any = moment(birthday).format('x');
         this.age = ((currentTime.getTime() - birthDate) / 31556952000).toFixed(0);
         return this.age;
+    }
+
+    changeUserData() {}
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
 }

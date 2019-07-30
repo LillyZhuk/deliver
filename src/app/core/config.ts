@@ -1,12 +1,12 @@
 export const firebaseConfig = {
     fire: {
-        apiKey: 'AIzaSyB2xc1_o7xMEcHcY2BRiCV5jNEw3jv4E0M',
-        authDomain: 'fooddelivery-d2327.firebaseapp.com',
-        databaseURL: 'https://fooddelivery-d2327.firebaseio.com',
-        projectId: 'fooddelivery-d2327',
+        apiKey: 'AIzaSyAtzG3MuL3rVYh_HOQwDAO3WlkYRZgn8OA',
+        authDomain: 'deliverysome-dacd6.firebaseapp.com',
+        databaseURL: 'https://deliverysome-dacd6.firebaseio.com',
+        projectId: 'deliverysome',
         storageBucket: '',
-        messagingSenderId: '303497092967',
-        appId: '1:303497092967:web:7831bef8a830a0d8'
+        messagingSenderId: '83581080675',
+        appId: '1:83581080675:web:9bb9f93ab84af4bb'
     }
 };
 

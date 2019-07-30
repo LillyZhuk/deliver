@@ -12,9 +12,11 @@ import { AuthModule } from './component/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HomePageModule } from './pages/home/home.module';
 
-// import { AngularFireModule } from '@angular/fire';
-// import { AngularFireAuthModule } from '@angular/fire/auth';
-// import { firebaseConfig } from './core/config';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { firebaseConfig } from './core/config';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthGuard } from './services/auth.guard';
@@ -36,7 +38,11 @@ import { ProfileService } from './services/profile.service';
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    CoreModule
+    CoreModule,
+    AngularFireModule.initializeApp(firebaseConfig.fire),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
   providers: [
     StatusBar,

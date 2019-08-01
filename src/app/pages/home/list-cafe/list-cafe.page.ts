@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {OrderService} from '../../../services/order.service';
 
 @Component({
   selector: 'app-list-cafe',
@@ -7,32 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListCafePage implements OnInit {
 
-  public cafe = [
-    {
-      cafe: 'Best Grill',
-      id: 1
-    },
-    {
-      cafe: 'Sushi 3303',
-      id: 2
-    },
-    {
-      cafe: 'Ambar',
-      id: 3
-    },
-    {
-      cafe: 'McDonalds',
-      id: 4
-    },
-    {
-      cafe: 'Rock-n-Roll',
-      id: 5
-    }
-  ];
+  public cafe = [];
 
-  constructor() { }
+  constructor(
+      private orderService: OrderService
+  ) { }
 
   ngOnInit() {
+    this.getListCafe();
+  }
+
+  public getListCafe() {
+    this.orderService.getListCafe().subscribe(
+    querySnapshot => {
+      querySnapshot.forEach(item => {
+        this.cafe.push(item.data());
+      });
+    });
   }
 
 }

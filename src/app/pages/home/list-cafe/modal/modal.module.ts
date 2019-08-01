@@ -6,6 +6,8 @@
 // import { IonicModule } from '@ionic/angular';
 //
 // import { ModalPage } from './modal.page';
+// import { IonicStorageModule } from '@ionic/storage';
+//
 //
 // const routes: Routes = [
 //   {
@@ -19,6 +21,7 @@
 //     CommonModule,
 //     FormsModule,
 //     IonicModule,
+//     IonicStorageModule.forRoot(),
 //     ReactiveFormsModule,
 //     RouterModule.forChild(routes)
 //   ],

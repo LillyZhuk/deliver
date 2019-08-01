@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { ListCafePage } from './list-cafe.page';
 import { MenuPage } from './menu/menu.page';
+import { IonicStorageModule } from '@ionic/storage';
+
 // import { ModalPage } from './modal/modal.page';
 
 const routes: Routes = [
@@ -26,7 +28,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    IonicStorageModule.forRoot()
   ],
   declarations: [ListCafePage, MenuPage],
   // entryComponents: [ModalPage],

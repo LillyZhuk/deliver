@@ -17,6 +17,8 @@ import {AngularFireAuth} from '@angular/fire/auth';
 export class AuthService {
   public token: any;
   isLoggedIn = false;
+  public data;
+  public role: string;
 
   constructor(
       private http: HttpClient,
@@ -31,13 +33,19 @@ export class AuthService {
           (res: any) => {
               console.log(res);
               this.token = res.user.ra;
-              this.storage.set('uid', res.user.uid);
-              this.storage.set('token', this.token).then(
+              this.storage.set('token', this.token);
+              this.storage.set('uid', res.user.uid).then(
                   () => {
-                      // this.profileService.getProfile(this.token).subscribe(
-                      //     data => {
-                      //         this.storage.set('user', data);
-                      //     });
+                      this.profileService.getProfile(res.user.uid)
+                          .subscribe(querySnapshot => {
+                              querySnapshot.forEach(item => {
+                                  this.data = item.data();
+                              });
+                              this.role = this.data.role;
+                              console.log(this.role, 'role auth')
+                              this.storage.set('role', this.data.role);
+                              this.storage.set('name', this.data.name);
+                          });
                       console.log('Token Stored');
                   }, error => console.error('Error storing item', error));
               this.isLoggedIn = true;

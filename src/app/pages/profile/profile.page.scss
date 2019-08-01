@@ -2,6 +2,22 @@ ion-icon {
   float: left;
 }
 
+.img-avatar {
+  height: 100px;
+  padding: 0 0 !important;
+  border-radius: 50% !important;
+  outline: none;
+}
+
+.filebtn {
+  opacity: 0;
+  position: absolute;
+  top: -100em;
+  left: -100em;
+}
+
+
+
 ion-avatar {
   width:100% !important;
   height : 100% !important;

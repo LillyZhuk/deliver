@@ -10,9 +10,13 @@
     <div class="person-info" *ngIf="isLoaded">
         <form #formCtrl="ngForm">
             <div align="center" >
-                <ion-avatar>
-                    <img src="{{person.avatar ? person.avatar : secondImg}}">
-                </ion-avatar>
+                <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" />
+                    <ion-avatar>
+<!--                        <img src="{{person.avatar}}" (click)="changeAvatar()">-->
+<!--                        <img src="https://ucarecdn.com/{{ person.avatar }}/-/scale_crop/150x150/center/" (click)="changeAvatar()">-->
+                        <img src="https://ucarecdn.com/{{ person.avatar }}/-/scale_crop/150x150/center/" (click)="presentActionSheet()">
+                    </ion-avatar>
+
                 <h4>{{person.name}}</h4>
 <!--                <h5>{{age}} лет</h5>-->
             </div>
@@ -25,7 +29,7 @@
                 <ion-item>
                     <ion-label floating>Телефон: </ion-label>
 <!--                    {{person.phone}}-->
-<!--                    <ion-input type="text" [(ngModel)]="person.tele" name="tele" required></ion-input>-->
+                    <ion-input type="text" [(ngModel)]="person.tele" name="tele" required></ion-input>
                 </ion-item>
 
                 <ion-item>
@@ -41,6 +45,16 @@
             </ion-list>
             <ion-button (click)="changeUserData()">Изменить</ion-button>
         </form>
+    </div>
+
+    <div>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="6" *ngFor="let photo of photos">
+                    <img [src]="photo.data">
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </div>
 
 </ion-content>

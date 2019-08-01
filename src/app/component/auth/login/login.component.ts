@@ -6,6 +6,7 @@ import { IonicPage } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { User } from '../../models/user';
 import { MenuController } from '@ionic/angular';
+import {ProfileService} from '../../../services/profile.service';
 
 @IonicPage()
 @Component({
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
       private router: Router,
       private storage: Storage,
       private menuCtrl: MenuController,
+      private profileService: ProfileService
   ) { }
 
   ngOnInit() {
@@ -41,11 +43,9 @@ export class LoginComponent implements OnInit {
     const email = this.form.value.email;
     const password = this.form.value.password;
     this.router.navigateByUrl('home'); // delete
-    this.storage.set('role', 'admin');
     this.authService.loginUser(email, password).then(
         data => {
           console.log('Welcome');
-          this.storage.set('role', 'admin');
           this.router.navigateByUrl('home');
         },
         error => {

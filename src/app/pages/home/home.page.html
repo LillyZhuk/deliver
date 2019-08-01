@@ -8,7 +8,8 @@
 
     <ion-tab-button tab="history">
       <ion-icon name="reorder"></ion-icon>
-      <ion-label >История</ion-label>
+      <ion-label *ngIf="role === 'user'">История</ion-label>
+      <ion-label *ngIf="role === 'admin'">Заказы</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="chat">

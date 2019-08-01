@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list *ngFor="let c of cafe">
-    <ion-item [routerLink]="['/home/list-cafe', c.id]" routerDirection="forward">
+    <ion-item [routerLink]="['/home/list-cafe', c.cafe]" routerDirection="forward">
       <ion-label>{{c.cafe}}</ion-label>
     </ion-item>
   </ion-list>

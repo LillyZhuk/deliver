@@ -5,38 +5,16 @@
 </ion-header>
 
 <ion-content>
-<!--  <ion-button color="secondary" expand="block" (click)="showDivPass()">Изменить пароль</ion-button>-->
-<!--    <app-changes *ngIf="showChangesPass" [title]="titlePass" (newValue)="changeValue($event)"></app-changes>-->
-<!--  <ion-button color="secondary" expand="block" (click)="showDivEmail()">Изменить почту/телефон</ion-button>-->
-<!--    <app-changes *ngIf="showChangesEmail" [title]="titleEmail" (newValue)="changeValue($event)"></app-changes>-->
-<!--  <ion-button color="secondary" expand="block" (click)="showDivName()">Изменить имя</ion-button>-->
-<!--    <app-changes *ngIf="showChangesName" [title]="titleName" (newValue)="changeValue($event)"></app-changes>-->
 
-  <form class="create-form" [formGroup]="form" novalidate (ngSubmit)="onSubmit(form.value)">
+  <form class="create-form">
 
-    <div class="form-group">
-      <label>
-        <input  placeholder="Name" class="form-control" formControlName="name">
-      </label>
+    <div>
+      Сбросить пароль
+    </div>
+    <div>
+      Удалить аккаунт
     </div>
 
-    <div class="form-group">
-      <label>
-        <input  placeholder="Surname" class="form-control" formControlName="surname">
-      </label>
-    </div>
-
-<!--    <div class="form-group">-->
-<!--      <label>-->
-<!--        <input  type="number" min="0" max="100" placeholder="Age" class="form-control" formControlName="age">-->
-<!--      </label>-->
-<!--    </div>-->
-
-    <div class="row submit-button-container">
-      <div class="col-md-4">
-        <button class="submit-button" type="submit" [disabled]="!form.valid">Create</button>
-      </div>
-    </div>
 
   </form>
 

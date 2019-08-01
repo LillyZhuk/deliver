@@ -4,6 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { FormGroup } from '@angular/forms';
 import { Order } from '../../../../component/models/order';
 import {OrderService} from '../../../../services/order.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-modal',
@@ -14,15 +15,8 @@ export class ModalPage implements OnInit {
 
   public form: FormGroup;
   public img = '../../../../assets/shapes.svg';
-  public data = null;
-  public id: number;
-  public cafe = [
-    { cafe: 'Best Grill', id: 1 },
-    { cafe: 'Sushi 3303', id: 2 },
-    { cafe: 'Ambar', id: 3 },
-    { cafe: 'McDonalds', id: 4 },
-    { cafe: 'Rock-n-Roll', id: 5 }
-  ];
+  public data;
+  public id;
   public meatList = [
     { title: 'курица', color: 'success', value: 'chicken', name: 'meat' },
     { title: 'говядина', color: 'tertiary', value: 'beef', name: 'meat' },
@@ -44,6 +38,8 @@ export class ModalPage implements OnInit {
   size: '',
   quantity: null,
   cafe: '',
+  name: '',
+  userId: ''
   };
   public additionList = [
     { name: 'mushrooms', checked: false, color: 'primary', title: 'грибы' },
@@ -60,12 +56,19 @@ export class ModalPage implements OnInit {
       private modalCtrl: ModalController,
       public loadingController: LoadingController,
       private navParams: NavParams,
-      private orderService: OrderService
+      private orderService: OrderService,
+      private storage: Storage
   ) { }
 
   ngOnInit() {
     this.data = this.navParams.get('menu');
-    this.id = this.navParams.get('cafeId');
+    this.id = this.navParams.get('cafe');
+    this.storage.get('name').then(val => {
+      this.order.name = val;
+    });
+    this.storage.get('uid').then(val => {
+      this.order.userId = val;
+    });
   }
 
   public close(): void {
@@ -73,7 +76,7 @@ export class ModalPage implements OnInit {
   }
 
   public radioSelect(meat): string {
-    return this.filling = meat;
+     return this.filling = meat;
   }
 
   checkEvent(val) {
@@ -91,15 +94,25 @@ export class ModalPage implements OnInit {
   }
 
   public send(form): void {
-    const cafeName = this.cafe.filter(value => value.id === this.id);
-    this.order.cafe = cafeName[0].cafe;
-    this.order.filling = this.filling;
+    this.order.cafe = this.data.cafe;
+    if (this.filling === undefined) {
+      this.order.filling = '';
+    } else {
+      this.order.filling = this.filling;
+    }
+    // this.order.filling = this.filling;
     this.order.order = this.data.title;
     this.order.addition = this.addition;
     this.order.quantity = form.value.quantity;
-    this.order.size = this.size;
+    if (this.size === undefined) {
+      this.order.size = '';
+    } else {
+      this.order.size = this.size;
+    }
+    // this.order.size = this.size;
     this.order.note = form.value.note;
-    console.log(this.order, form.value, 'send');
+    this.order.id = Math.random() * 100;
+    console.log(this.order, form.value, 'modal page');
     console.log('sending...');
     this.orderService.createOrder(this.order).then(
         res => {

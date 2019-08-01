@@ -26,6 +26,14 @@ import { CoreModule } from './component/core.module';
 import { ChatService } from './services/chat.service';
 import { ProfileService } from './services/profile.service';
 
+import { File } from '@ionic-native/file/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+
+import { Camera } from '@ionic-native/camera/ngx';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
+import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,7 +59,13 @@ import { ProfileService } from './services/profile.service';
     AuthGuard,
     NativeStorage,
     ChatService,
-    ProfileService
+    ProfileService,
+    File,
+    FileChooser,
+    FilePath,
+    Camera,
+    Base64ToGallery,
+    PhotoLibrary
   ],
   bootstrap: [AppComponent]
 })

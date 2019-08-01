@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { ProfileService } from '../../services/profile.service';
 import { Storage } from '@ionic/storage';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -15,8 +16,11 @@ export class HomePage implements OnInit {
   constructor(
       private menu: MenuController,
       private profileService: ProfileService,
-      private storage: Storage
-  ) { }
+      private authService: AuthService
+  ) {
+    this.role = this.authService.role;
+    console.log(this.role);
+  }
   ngOnInit(): void {
     this.menu.enable(true);
   }

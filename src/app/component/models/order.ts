@@ -14,4 +14,7 @@ export interface Order {
     mushrooms?: string;
     cheese?: string;
     status?: boolean;
+    name: string;
+    userId: string;
+    path?: string;
 }

@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
+import {ResetPassComponent} from './resset-pass/reset-pass.component';
 import {AuthComponent} from './auth.component';
 import {AuthRoutingModule} from './auth-routing.module';
 import {IonicModule} from '@ionic/angular';
@@ -13,7 +14,8 @@ import {CommonModule} from '@angular/common';
     declarations: [
         LoginComponent,
         RegistrationComponent,
-        AuthComponent
+        AuthComponent,
+        ResetPassComponent
     ],
     imports: [
         AuthRoutingModule,

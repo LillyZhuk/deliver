@@ -4,7 +4,9 @@ export interface Profile {
     name?: string;
     email?: string;
     avatar?: string;
-    nickname?: string;
     nameToSearch: string;
     surname?: string;
+    phone?: string;
+    role: string;
+    userId: string;
 }

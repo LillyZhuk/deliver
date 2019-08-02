@@ -7,6 +7,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { Base64ToGallery, Base64ToGalleryOptions } from '@ionic-native/base64-to-gallery/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +24,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     photos = [];
     @ViewChild('fileBtn') fileBtn: {
         nativeElement: HTMLInputElement
-    }
+    };
 
     constructor(
       private profileService: ProfileService,
@@ -31,21 +32,22 @@ export class ProfilePage implements OnInit, OnDestroy {
       private camera: Camera,
       public actionSheetController: ActionSheetController,
       private base64ToGallery: Base64ToGallery,
-      private photoLibrary: PhotoLibrary
+      private photoLibrary: PhotoLibrary,
+      private file: File
   ) { }
 
   ngOnInit() {
         this.getProfile();
-        this.loadSaved();
   }
 
-  public getProfile() {
+  public getProfile(): void {
         this.storage.get('uid').then(val => {
             this.sub = this.profileService.getProfile(val)
                 .subscribe(querySnapshot => {
                     querySnapshot.forEach(item => {
                         this.person = item.data();
                         this.isLoaded = true;
+                        this.getAge(this.person['birthday']);
                     });
                 });
         });
@@ -53,20 +55,19 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     public getAge(birthday): number {
         const currentTime = new Date();
-        const birthDate: any = moment(birthday).format('x');
-        this.age = ((currentTime.getTime() - birthDate) / 31556952000).toFixed(0);
+        this.age = ((currentTime.getTime() - birthday) / 31556952000).toFixed(0);
         return this.age;
     }
 
     async presentActionSheet() {
         const actionSheet = await this.actionSheetController.create({
-            header: 'Albums',
+            header: 'Выбрать фото',
             buttons: [{
                 text: 'Загрузить из галереи',
                 role: 'destructive',
                 icon: 'images',
                 handler: () => {
-                    this.changeAvatar();
+                    this.openGallery();
                 }
             }, {
                 text: 'Сделать снимок',
@@ -79,7 +80,7 @@ export class ProfilePage implements OnInit, OnDestroy {
                 icon: 'trash',
                 role: '',
                 handler: () => {
-                    console.log('Cancel clicked');
+                    this.deletePhoto();
                 }
             }, {
                 text: 'Закрыть',
@@ -93,47 +94,51 @@ export class ProfilePage implements OnInit, OnDestroy {
         await actionSheet.present();
     }
 
-    changeUserData() {}
+    changeUserData(form) {
+        this.storage.get('uid').then(val => {
+            this.profileService.editProfile(val, form.value).then(res => {
+                this.getProfile();
+            });
+        });
+    }
 
-    changeAvatar() {
+    openGallery() {
         this.fileBtn.nativeElement.click();
     }
 
     public takePhoto() {
         const options: CameraOptions = {
             quality: 100,
-            destinationType: this.camera.DestinationType.DATA_URL,
+            destinationType: this.camera.DestinationType.FILE_URI,
             encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE
-        };
+            mediaType: this.camera.MediaType.PICTURE,
+            saveToPhotoAlbum: true
+        }
 
         this.camera.getPicture(options).then((imageData) => {
-            this.currentImage = `data:image/jpeg;base64,${imageData}`;
-            // this.base64ToGallery.base64ToGallery(this.currentImage, options).then(
-            //     res => console.log(res, 'save'),
-            //     err => console.log('Error saving image to gallery ', err)
-            // );
-            this.photoLibrary.requestAuthorization().then(() => {
-            // this.photoLibrary.saveImage(this.currentImage + '&ext=.jpg').then()
+            this.file.resolveLocalFilesystemUrl(imageData) .then(fileEntry => {
+                let fileName = '';
+                const { name, nativeURL } = fileEntry;
+                const path = nativeURL.substring(0, nativeURL.lastIndexOf('/'));
+                fileName = name;
+                return this.file.readAsArrayBuffer(path, name);
+            }).then(buffer => {
+                const imgBlob = new Blob([buffer], {
+                    type: 'image/jpeg'
                 });
-            })
-            console.log(this.photos, 'photos');
-            // this.currentImage = `data:image/jpeg;base64,${imageData}`;
-            //
-            // console.log(this.currentImage, 'photo');
+                const data = new FormData();
+                data.append('file', imgBlob);
+                data.append('UPLOADCARE_STORE', '1');
+                data.append('UPLOADCARE_PUB_KEY', 'ada5e3cb2da06dee6d82');
 
-            // const data = new FormData();
-            // data.append('file', this.currentImage);
-            // data.append('UPLOADCARE_STORE', '1');
-            // data.append('UPLOADCARE_PUB_KEY', 'ada5e3cb2da06dee6d82');
-            //
-            // this.savePhoto(data);
-        // }, (err) => {
-        //     console.log('Camera issue:' + err);
-        // });
+                this.savePhoto(data);
+            });
+        }, (err) => {
+            console.log(err);
+        });
     }
 
-    uploadPic(event) {
+    public uploadPic(event): void {
         const files = event.target.files;
         const data = new FormData();
         data.append('file', files[0]);
@@ -143,7 +148,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         this.savePhoto(data);
     }
 
-    savePhoto(data) {
+    public savePhoto(data): void {
         this.profileService.uploadImg(data).subscribe(value => {
             this.storage.get('uid').then(val => {
                 this.profileService.changeImg(val, value).then(res => {
@@ -153,14 +158,16 @@ export class ProfilePage implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        this.sub.unsubscribe();
+    public deletePhoto() {
+        this.storage.get('uid').then(val => {
+            this.profileService.deleteImg(val).then(res => {
+                this.getProfile();
+            });
+        });
     }
 
-    loadSaved() {
-        this.storage.get('photos').then((photos) => {
-            this.photos = photos || [];
-        });
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
 }

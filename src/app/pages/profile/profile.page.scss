@@ -32,3 +32,9 @@ ion-avatar {
 ion-textarea {
   height: auto;
 }
+
+.change-btn {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+}

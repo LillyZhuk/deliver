@@ -8,7 +8,7 @@
 
     <ion-spinner color="tertiary" name="lines" *ngIf="!isLoaded"></ion-spinner>
     <div class="person-info" *ngIf="isLoaded">
-        <form #formCtrl="ngForm">
+        <form #formCtrl="ngForm" (ngSubmit)="changeUserData(formCtrl)">
             <div align="center" >
                 <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" />
                     <ion-avatar>
@@ -18,43 +18,34 @@
                     </ion-avatar>
 
                 <h4>{{person.name}}</h4>
-<!--                <h5>{{age}} лет</h5>-->
             </div>
             <ion-list >
                 <ion-item>
                     <ion-label floating>День рождения:</ion-label>
-                    <ion-datetime displayFormat="DD.MM.YY" [(ngModel)]="person.birthday" [ngModelOptions]="{standalone: true}" required></ion-datetime>
+                    <ion-datetime displayFormat="DD.MM.YY" [(ngModel)]="person.birthday" name="birthday" required></ion-datetime>
                 </ion-item>
 
                 <ion-item>
                     <ion-label floating>Телефон: </ion-label>
 <!--                    {{person.phone}}-->
-                    <ion-input type="text" [(ngModel)]="person.tele" name="tele" required></ion-input>
+                    <ion-input type="text" [(ngModel)]="person.phone" name="phone" required></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label floating>Почта: </ion-label>
-                    {{person.email}}
+                    <p>{{person.email}}</p>
 <!--                    <ion-input type="text" [(ngModel)]="person.email" name="email" required></ion-input>-->
                 </ion-item>
 
                 <ion-item>
                     <ion-label floating>Биография:</ion-label>
-                    <ion-textarea type="text" [(ngModel)]="person.bio" name="name" required></ion-textarea>
+                    <ion-textarea type="text" [(ngModel)]="person.bio" name="bio" required></ion-textarea>
                 </ion-item>
             </ion-list>
-            <ion-button (click)="changeUserData()">Изменить</ion-button>
+            <div class="change-btn">
+                <ion-button type="submit">Изменить</ion-button>
+            </div>
         </form>
-    </div>
-
-    <div>
-        <ion-grid>
-            <ion-row>
-                <ion-col size="6" *ngFor="let photo of photos">
-                    <img [src]="photo.data">
-                </ion-col>
-            </ion-row>
-        </ion-grid>
     </div>
 
 </ion-content>

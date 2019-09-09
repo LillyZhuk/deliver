@@ -5,10 +5,15 @@
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
 
+
 ion-item,
 ion-menu-toggle,
 ion-list {
   --ion-background-color: none;
+}
+
+ion-menu-toggle {
+  //--ion-background-color: #dbfcfc;
 }
 
 ion-toolbar {

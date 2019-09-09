@@ -12,3 +12,5 @@ export const firebaseConfig = {
 
 // export const BASE_URL = 'http://192.168.1.227:5000';
 export const BASE_URL = 'http://localhost:5000';
+
+export const defaultImg = 'f6b60798-1743-4d13-9b7d-e6633132f2d8';

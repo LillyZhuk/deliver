@@ -22,14 +22,13 @@ export class HistoryPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.storage.get('role').then(val => {
-      if (val === 'admin') {
-        this.userRole = val;
+    this.storage.get('user').then(val => {
+      if (val.displayName === 'Admin') {
+        this.userRole = val.displayName;
         this.getOrders();
-      }
-      if (val === 'user') {
-        this.userRole = val;
-        this.getHistory();
+      } else {
+          this.userRole = 'user';
+          this.getHistory();
       }
     });
   }
@@ -72,15 +71,16 @@ export class HistoryPage implements OnInit {
   }
 
   takeOrder(value) {
-    this.orderService.updateOrder(value);
-    this.getOrders();
+    this.orderService.updateOrder(value).then(() => {
+        this.getOrders();
+    });
   }
 
   deleteOrder(i) {
     this.mockedAdmin.splice(i, 1);
   }
 
-  getClasses(messageType) {
+  getClasses(messageType): string {
     if (!messageType) {
       return messageType = 'accepted';
     }

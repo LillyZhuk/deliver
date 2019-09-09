@@ -1,13 +1,16 @@
-import {Component, ElementRef, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
 import { Storage } from '@ionic/storage';
-import { Profile } from '../../component/models/profile.model';
-import * as moment from 'moment';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
-import { Base64ToGallery, Base64ToGalleryOptions } from '@ionic-native/base64-to-gallery/ngx';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { Subscription } from 'rxjs';
+import { Profile } from '../../component/models/profile.model';
+import * as firebase from 'firebase';
+import { DataFile } from '../../component/models/file';
+import {Entry} from '@ionic-native/file';
 
 @Component({
   selector: 'app-profile',
@@ -16,12 +19,10 @@ import { File } from '@ionic-native/file/ngx';
 })
 export class ProfilePage implements OnInit, OnDestroy {
 
-    public person = {};
-    public age;
-    public isLoaded: boolean = false;
-    public sub;
-    currentImage;
-    photos = [];
+    public person: firebase.firestore.DocumentData;
+    public isLoaded = false;
+    public imgIsLoaded = false;
+    private profileSub: Subscription;
     @ViewChild('fileBtn') fileBtn: {
         nativeElement: HTMLInputElement
     };
@@ -36,28 +37,22 @@ export class ProfilePage implements OnInit, OnDestroy {
       private file: File
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
         this.getProfile();
   }
 
   public getProfile(): void {
         this.storage.get('uid').then(val => {
-            this.sub = this.profileService.getProfile(val)
+            this.profileSub = this.profileService.getProfile(val)
                 .subscribe(querySnapshot => {
                     querySnapshot.forEach(item => {
                         this.person = item.data();
                         this.isLoaded = true;
-                        this.getAge(this.person['birthday']);
+                        this.imgIsLoaded = true;
                     });
                 });
         });
   }
-
-    public getAge(birthday): number {
-        const currentTime = new Date();
-        this.age = ((currentTime.getTime() - birthday) / 31556952000).toFixed(0);
-        return this.age;
-    }
 
     async presentActionSheet() {
         const actionSheet = await this.actionSheetController.create({
@@ -86,23 +81,20 @@ export class ProfilePage implements OnInit, OnDestroy {
                 text: 'Закрыть',
                 icon: 'close',
                 role: 'cancel',
-                handler: () => {
-                    console.log('Cancel clicked');
-                }
             }]
         });
         await actionSheet.present();
     }
 
-    changeUserData(form) {
+    public changeUserData(form): void {
         this.storage.get('uid').then(val => {
-            this.profileService.editProfile(val, form.value).then(res => {
+            this.profileService.editProfile(val, form.value).then(() => {
                 this.getProfile();
             });
         });
     }
 
-    openGallery() {
+    public openGallery(): void {
         this.fileBtn.nativeElement.click();
     }
 
@@ -113,61 +105,60 @@ export class ProfilePage implements OnInit, OnDestroy {
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
             saveToPhotoAlbum: true
-        }
+        };
 
-        this.camera.getPicture(options).then((imageData) => {
-            this.file.resolveLocalFilesystemUrl(imageData) .then(fileEntry => {
-                let fileName = '';
+        this.camera.getPicture(options).then((imageData: string) => {
+            this.file.resolveLocalFilesystemUrl(imageData) .then((fileEntry: Entry) => {
                 const { name, nativeURL } = fileEntry;
                 const path = nativeURL.substring(0, nativeURL.lastIndexOf('/'));
-                fileName = name;
                 return this.file.readAsArrayBuffer(path, name);
             }).then(buffer => {
                 const imgBlob = new Blob([buffer], {
                     type: 'image/jpeg'
                 });
-                const data = new FormData();
-                data.append('file', imgBlob);
-                data.append('UPLOADCARE_STORE', '1');
-                data.append('UPLOADCARE_PUB_KEY', 'ada5e3cb2da06dee6d82');
-
-                this.savePhoto(data);
+                this.imgIsLoaded = false;
+                this.generationData(imgBlob);
             });
-        }, (err) => {
-            console.log(err);
         });
     }
 
     public uploadPic(event): void {
+        this.imgIsLoaded = false;
         const files = event.target.files;
+
+        this.generationData(files[0]);
+    }
+
+    public generationData(files: string | Blob): void {
         const data = new FormData();
-        data.append('file', files[0]);
+        data.append('file', files);
         data.append('UPLOADCARE_STORE', '1');
         data.append('UPLOADCARE_PUB_KEY', 'ada5e3cb2da06dee6d82');
 
         this.savePhoto(data);
     }
 
-    public savePhoto(data): void {
-        this.profileService.uploadImg(data).subscribe(value => {
-            this.storage.get('uid').then(val => {
-                this.profileService.changeImg(val, value).then(res => {
+    public savePhoto(data: FormData): void {
+        this.profileService.uploadImg(data).then((value: DataFile) => {
+            this.storage.get('uid').then((val: string) => {
+                this.profileService.changeImg(val, value).then(() => {
                     this.getProfile();
+                    this.imgIsLoaded = true;
                 });
             });
         });
     }
 
-    public deletePhoto() {
-        this.storage.get('uid').then(val => {
-            this.profileService.deleteImg(val).then(res => {
+    public deletePhoto(): void {
+        this.storage.get('uid').then((val: string) => {
+            this.profileService.deleteImg(val).then(() => {
                 this.getProfile();
             });
         });
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        this.profileSub.unsubscribe();
     }
 
 }

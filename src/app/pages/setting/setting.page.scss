@@ -5,3 +5,26 @@ ion-icon {
 ion-button {
   margin: 2%;
 }
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: -140px;
+}
+
+.btn {
+  margin-bottom: 10px;
+}
+
+.new-password {
+  border: 1px solid black;
+  width: 86%;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-evenly;
+}

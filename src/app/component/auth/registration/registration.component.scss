@@ -5,12 +5,12 @@
   align-items: center;
 }
 
-.login {
+.register {
   margin: 7px 0;
 }
 
 .text-white {
-  color: white;
+  color: darkblue;
 }
 
 .component-name,
@@ -24,7 +24,6 @@
 
 input[type=text],
 input[type=password] {
-  color: #7e57ff;
   padding: 5px;
   outline:none;
   height: 40px;
@@ -90,7 +89,7 @@ a:focus {
 }
 
 #btn-my {
-  background: #ef44a9;
+  // background: #ef44a9;
   //padding: 5% 0;
   //width: 100%;
   //font-size: 18px;

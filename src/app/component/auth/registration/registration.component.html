@@ -4,29 +4,33 @@
   </div>
 
   <form [formGroup]="form" >
-    <div class="login component-name">
+    <div class="register component-name">
       <input type="text" placeholder="Enter login" class="new-height" formControlName="name">
     </div>
 
-    <div class="login component-email">
+    <div class="register component-email">
       <input type="text" placeholder="Enter your email" class="new-height" formControlName="email">
     </div>
 
-    <div class="login component-password">
+    <div class="register component-password">
       <input type="password" placeholder="Enter the password" class="new-height" formControlName="password">
     </div>
 
-    <div class="login component-password">
+    <div class="register component-password">
       <input type="password" placeholder="Re enter the password" class="new-height">
     </div>
 
-    <div class="login component-remember">
+    <div class="register component-remember">
       <input type="checkbox" class="regular-checkbox" formControlName="agree">
       <span>I accept the terms of the agreement</span>
     </div>
 
     <div class="login component-button">
-      <ion-button expand="full" id="btn-my" [disabled]="!form.valid" (click)="OnSubmit()">Registration</ion-button>
+      <ion-button expand="full"
+                  id="btn-my"
+                  [disabled]="!form.valid"
+                  (click)="OnSubmit()"
+                  color="tertiary">Registration</ion-button>
     </div>
   </form>
 

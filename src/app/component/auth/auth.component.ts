@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import { ModalController, MenuController, NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -14,20 +14,18 @@ export class AuthComponent implements OnInit {
       private router: Router,
       private menu: MenuController,
       private authService: AuthService,
-  ) {
-    this.menu.enable(false);
-  }
+  ) { }
 
   ionViewWillEnter() {
-    this.authService.getToken().then(() => {
-      if (this.authService.isLoggedIn) {
-        this.router.navigateByUrl('home');
+    this.authService.isLogged().then((value) => {
+      if (value) {
+        return this.router.navigateByUrl('home');
       }
     });
   }
 
   ngOnInit() {
-    this.router.navigate(['/login']);
+    return this.router.navigate(['/login']);
   }
 
 }

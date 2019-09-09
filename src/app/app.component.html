@@ -7,12 +7,12 @@
 
             <div id="avatar">
               <ion-avatar slot="start" >
-                <img src="https://ucarecdn.com/{{ person.avatar }}/-/scale_crop/150x150/center/">
+                <img src="https://ucarecdn.com/{{ photoURL }}/-/scale_crop/150x150/center/" alt="avatar">
               </ion-avatar>
             </div>
 
-            <ion-label id="name">{{person.name}}</ion-label>
-            <ion-label id="email">{{person.email}}</ion-label>
+            <ion-label id="name">{{ name }}</ion-label>
+            <ion-label id="email">{{ email }}</ion-label>
           </div>
         </ion-toolbar>
       </ion-header>

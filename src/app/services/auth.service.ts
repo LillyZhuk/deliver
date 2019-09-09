@@ -1,89 +1,68 @@
 import { Injectable } from '@angular/core';
-import { Observable} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { BASE_URL } from '../core/config';
-import { Storage } from '@ionic/storage';
 import { Router} from '@angular/router';
-import { tap } from 'rxjs/operators';
-import { ProfileService } from './profile.service';
-import { User } from '../component/models/user';
-import {AngularFireAuth} from '@angular/fire/auth';
 
+import { Storage } from '@ionic/storage';
+import { Events } from '@ionic/angular';
+
+import { ProfileService } from './profile.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+
+import * as firebase from 'firebase';
+import {defaultImg} from '../core/config';
+import UserCredential = firebase.auth.UserCredential;
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public token: any;
-  isLoggedIn = false;
-  public data;
-  public role: string;
+
+  public HAS_LOGGED_IN = 'hasLoggedIn';
 
   constructor(
-      private http: HttpClient,
       private storage: Storage,
       private router: Router,
-      private profileService: ProfileService,
       public fAuth: AngularFireAuth,
+      public events: Events,
+      private profileService: ProfileService
   ) {}
 
-  loginUser(email, password) {
+  public loginUser(email: string, password: string): Promise<void | any[]> {
       return this.fAuth.auth.signInWithEmailAndPassword(email, password).then(
-          (res: any) => {
-              console.log(res);
-              this.token = res.user.ra;
-              this.storage.set('token', this.token);
-              this.storage.set('uid', res.user.uid).then(
-                  () => {
-                      this.profileService.getProfile(res.user.uid)
-                          .subscribe(querySnapshot => {
-                              querySnapshot.forEach(item => {
-                                  this.data = item.data();
-                              });
-                              this.role = this.data.role;
-                              console.log(this.role, 'role auth')
-                              this.storage.set('role', this.data.role);
-                              this.storage.set('name', this.data.name);
-                          });
-                      console.log('Token Stored');
+          (res: UserCredential) => {
+              return this.storage.set(this.HAS_LOGGED_IN, true).then(() => {
+                  return this.storage.set('uid', res.user.uid).then(() => {
+                      return this.storage.set('user', res.user.providerData[0]).then(() => {
+                          return this.events.publish('user:login');
+                      });
                   }, error => console.error('Error storing item', error));
-              this.isLoggedIn = true;
-              return this.token;
-              },
-    );
+              });
+          });
 
   }
 
-  registerUser(email, password) {
-    // return this.http.post<User>(`${BASE_URL}/auth/register`, credentials);
-     return this.fAuth.auth.createUserWithEmailAndPassword(email, password);
+  public registerUser(user): Promise<any> {
+     return this.fAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(
+         (res: firebase.auth.UserCredential) => {
+             return this.profileService.createProfile(res.user.uid, user.email, user.name);
+         }).then(() => {
+         return this.profileService.updateCurrentUser(user.name, defaultImg);
+         });
   }
 
-  logOut() {
-    this.router.navigateByUrl('/login');
-    this.storage.remove('token');
-    this.storage.clear();
-    this.isLoggedIn = false;
-    delete this.token;
+  public logOut(): Promise<any> {
+    return this.storage.clear().then(() => {
+        return this.router.navigateByUrl('/login').then(() => {
+            return this.fAuth.auth.signOut();
+        });
+    });
   }
 
-  getToken() {
-    return this.storage.get('token').then(
-        data => {
-          this.token = data;
-          if (this.token != null) {
-            this.isLoggedIn = true;
-          } else {
-            this.isLoggedIn = false;
-          }
-        },
-        error => {
-          this.token = null;
-          this.isLoggedIn = false;
-        }
-    );
-  }
+    public isLogged(): Promise<boolean> {
+        return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
+            return value === true;
+        });
+    }
 
 
 }

@@ -9,11 +9,12 @@
     <ion-spinner color="tertiary" name="lines" *ngIf="!isLoaded"></ion-spinner>
     <div class="person-info" *ngIf="isLoaded">
         <form #formCtrl="ngForm" (ngSubmit)="changeUserData(formCtrl)">
-            <div align="center" >
+            <div class="circ" *ngIf="!imgIsLoaded">
+                <img src="../../../assets/28959e4de450ba38b84fd11c5b058570.gif">
+            </div>
+            <div align="center" *ngIf="imgIsLoaded">
                 <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" />
                     <ion-avatar>
-<!--                        <img src="{{person.avatar}}" (click)="changeAvatar()">-->
-<!--                        <img src="https://ucarecdn.com/{{ person.avatar }}/-/scale_crop/150x150/center/" (click)="changeAvatar()">-->
                         <img src="https://ucarecdn.com/{{ person.avatar }}/-/scale_crop/150x150/center/" (click)="presentActionSheet()">
                     </ion-avatar>
 
@@ -43,7 +44,7 @@
                 </ion-item>
             </ion-list>
             <div class="change-btn">
-                <ion-button type="submit">Изменить</ion-button>
+                <ion-button type="submit" color="light">Изменить</ion-button>
             </div>
         </form>
     </div>

@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { BASE_URL } from '../core/config';
+import { HttpClient } from '@angular/common/http';
+import { defaultImg } from '../core/config';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs-compat/add/operator/mergeMap';
-import { Profile } from '../component/models/profile.model';
+
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
+import { Events } from '@ionic/angular';
+import { Profile } from '../component/models/profile.model';
+import {DataFile} from '../component/models/file';
 
 
 @Injectable({
@@ -15,21 +17,20 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class ProfileService {
 
-  public headers;
-
     constructor(
       private http: HttpClient,
       private storage: Storage,
       private afAuth: AngularFireAuth,
       private db: AngularFirestore,
+      public events: Events
   ) { }
 
-  public getProfile(uid): Observable<any> {
+  public getProfile(uid): Observable<firebase.firestore.QuerySnapshot> {
       return this.db.collection('profile', ref => ref.where('userId', '==', uid)).get();
   }
 
-  public createProfile(uid, emailUser, userName) {
-        return this.db.collection('profile').doc(`${uid}`).set({
+  async createProfile(uid, emailUser, userName): Promise<void> {
+       await this.db.collection('profile').doc(`${uid}`).set({
             email: emailUser,
             name: userName,
             nameToSearch: userName.toLowerCase(),
@@ -39,31 +40,53 @@ export class ProfileService {
             birthday: '',
             phone: '',
             bio: '',
-            avatar: 'f6b60798-1743-4d13-9b7d-e6633132f2d8'
+            avatar: defaultImg
         });
   }
 
-  public editProfile(uid, data) {
-      return this.db.collection('profile').doc(`${uid}`).update({
+  async editProfile(uid: string, data: Profile): Promise<void>  {
+     await this.db.collection('profile').doc(`${uid}`).update({
           bio: data.bio,
           birthday: data.birthday,
           phone: data.phone
       });
   }
 
-    public changeImg(uid, data) {
-        return this.db.collection('profile').doc(`${uid}`).update({
+    async changeImg(uid, data): Promise<void> {
+        await this.db.collection('profile').doc(`${uid}`).update({
             avatar: data.file
+        }).then(() => {
+             this.storage.get('user').then(value => {
+                this.updateCurrentUser(value.displayName, data.file);
+            });
         });
     }
 
-    public uploadImg(data) {
-        return this.http.post<any>('https://upload.uploadcare.com/base/', data);
+   uploadImg(data: FormData): Promise<DataFile> {
+        return this.http.post<DataFile>('https://upload.uploadcare.com/base/', data).toPromise();
     }
 
-    public deleteImg(uid) {
-        return this.db.collection('profile').doc(`${uid}`).update({
-            avatar: 'f6b60798-1743-4d13-9b7d-e6633132f2d8'
+    async deleteImg(uid: string): Promise<void> {
+       await this.db.collection('profile').doc(`${uid}`).update({
+            avatar: defaultImg
+        }).then(() => {
+            this.storage.get('user').then(value => {
+                this.updateCurrentUser(value.displayName, defaultImg);
+            });
         });
+    }
+
+    public updateCurrentUser(name: string, file: string): Promise<any> {
+        const currentUser = firebase.auth().currentUser;
+        return currentUser.updateProfile({
+            displayName: name,
+            photoURL: file
+        }).then(() => {
+            firebase.auth().onAuthStateChanged((val) => {
+               return this.storage.set('user', val.providerData[0]).then(() => {
+                   return this.events.publish('user:change avatar');
+               });
+            });
+        } );
     }
 }

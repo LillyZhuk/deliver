@@ -1,12 +1,18 @@
+<div><ion-icon name="arrow-back" style="zoom:2; padding: 5px" routerLink="/login"></ion-icon></div>
 <div class="reset-form">
-  <div class="main-content">
+  <div *ngIf="sentEmail" class="message-send">Сообщение для сброса пароля отправлено</div>
+  <div class="main-content" *ngIf="!sentEmail">
     <h2>
       Сбросить пароль
     </h2>
-    <div>
-      <form action="">
-        <input type="text">
-        <button class="send-btn">Отправить</button>
+    <div class="reset-form-container">
+      <form [formGroup]="form" >
+        <div class="input-container">
+          <input type="text" placeholder="Введите ваш email" formControlName="email">
+        </div>
+        <div class="btn-container">
+          <button class="send-btn" (click)="reset()">Отправить</button>
+        </div>
       </form>
     </div>
   </div>

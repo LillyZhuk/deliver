@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { AuthGuard } from '../../services/auth.guard';
 import { HomePage } from './home.page';
 
 
@@ -9,7 +9,7 @@ const routes: Routes = [
             { path: 'list-cafe',
                 children: [
                 { path: '', loadChildren: './list-cafe/list-cafe.module#ListCafePageModule'}
-                ]
+                ], canActivateChild: [AuthGuard]
             }, { path: 'history', children: [
                 { path: '', loadChildren: './history/history.module#HistoryPageModule'}]
             }, { path: 'chat', children: [

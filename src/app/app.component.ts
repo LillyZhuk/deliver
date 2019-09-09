@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewInit} from '@angular/core';
 
 import { MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -7,17 +7,20 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
 import { Storage } from '@ionic/storage';
 import {ProfileService} from './services/profile.service';
+import { Events } from '@ionic/angular';
+import * as firebase from 'firebase';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit {
 
   public name: string;
   public email: string;
   public phone: string;
-  public person = {};
+  public photoURL: string;
   public appPages = [
     {
       title: ' Профиль',
@@ -30,8 +33,6 @@ export class AppComponent implements OnInit, OnDestroy {
       icon: 'build'
     }
   ];
-  public user;
-  public sub;
 
   constructor(
     private platform: Platform,
@@ -40,41 +41,49 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private menuCtrl: MenuController,
     private profileService: ProfileService,
-    private storage: Storage
+    private storage: Storage,
+    public events: Events
   ) {
     this.initializeApp();
+    this.events.subscribe('user:login', () => {
+      this.getData();
+    });
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      // this.authService.getToken();
+    });
+  }
+
+  ngOnInit() {
+    this.authService.isLogged().then(value => {
+      if (value) {
+        this.getData();
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.events.subscribe('user:change avatar', () => {
+      this.getData();
     });
   }
 
   logout() {
-    this.authService.logOut();
-    this.menuCtrl.enable(false);
-  }
-
-  ngOnInit(): void {
-    // this.getData();
-    this.getData();
-    }
-
-  getData() {
-    this.storage.get('uid').then(val => {
-      this.sub = this.profileService.getProfile(val)
-          .subscribe(querySnapshot => {
-            querySnapshot.forEach(item => {
-              this.person = item.data();
-            });
-          });
+    return this.authService.logOut().then(() => {
+      return this.menuCtrl.enable(false);
     });
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
+  getData() {
+    this.storage.get('user').then(val => {
+       if (val != null) {
+          this.name =  val.displayName;
+          this.email = val.email;
+          this.photoURL = val.photoURL;
+      }
+    });
   }
 }

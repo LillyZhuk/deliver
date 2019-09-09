@@ -17,7 +17,11 @@
     </div>
 
     <div class="login component-button">
-      <ion-button expand="full" id="btn-my" [disabled]="!form.valid" (click)="OnSubmit()">Log In</ion-button>
+      <ion-button expand="full"
+                  id="btn-my"
+                  [disabled]="!form.valid"
+                  (click)="OnSubmit()"
+                  color="tertiary">Log In</ion-button>
     </div>
   </form>
 

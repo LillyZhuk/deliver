@@ -6,16 +6,61 @@
 
 <ion-content>
 
-  <form class="create-form">
+  <div class="main-container">
 
-    <div>
-      Сбросить пароль
+    <div class="btn change-password">
+      <ion-button color="secondary"
+                  (click)="isNewPassword = true">
+        Изменить пароль
+      </ion-button>
     </div>
-    <div>
-      Удалить аккаунт
+    <div class="new-password"
+         *ngIf="isNewPassword">
+      <form [formGroup]="changePasswordForm" (submit)="submit()">
+        <ion-label>
+          Введите новый пароль
+        </ion-label>
+        <ion-input formControlName="newPassword"
+                   type="password"></ion-input>
+        <ion-label>
+          Повторите пароль
+        </ion-label>
+        <ion-input type="password"
+                   formControlName="confirmPassword"></ion-input>
+        <ion-label *ngIf="changePasswordForm.controls['confirmPassword'].errors?.MatchPassword" style="color: red">
+          Пароли не совпадают
+        </ion-label>
+        <div class="buttons-container">
+          <ion-button color="tertiary" *ngIf="!changingPassword"
+                      type="submit"
+                      [disabled]="!changePasswordForm.valid">
+            Сменить
+          </ion-button>
+          <ion-button *ngIf="changingPassword"
+                      color="warning"
+                      disabled
+                      ion-button block>
+            <div class="center-vertical-horizontal">
+              Processing...
+              <ion-spinner class="button-spinner" name="crescent"></ion-spinner>
+            </div>
+          </ion-button>
+          <ion-button color="danger"
+                      [disabled]="isCancel"
+                      (click)="isNewPassword = false">
+            Отменить
+          </ion-button>
+        </div>
+      </form>
+    </div>
+    <div class="alert-button btn delete">
+      <ion-button  color="secondary"
+                   (click)="presentAlertButtons()">
+        Удалить аккаунт
+      </ion-button>
+
     </div>
 
-
-  </form>
+  </div>
 
 </ion-content>

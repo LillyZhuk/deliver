@@ -5,18 +5,49 @@
   align-items: center;
 }
 
+.message-send {
+  font-size: 28px;
+  background: rgba(255, 255, 255, 0.7);
+  width: 90%;
+  font-weight: 500;
+  font-style: oblique;
+  padding: 5px;
+  margin-top: -120px;
+}
+
 h2 {
   margin-top: -90px;
   display: flex;
   justify-content: center;
 }
 
-.send-btn {
-  height: 23px;
-  background: #7941bf;
-  padding: 0 2%;
-}
-
 .main-content {
   width: 80%;
 }
+
+.reset-form-container{
+
+}
+
+.input-container {
+   margin-bottom: 15px;
+
+  & input {
+    width: 100%;
+    height: 35px;
+  }
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+
+  & button {
+    height: 33px;
+    background: white;
+    padding: 0 2%;
+    width: 80px;
+  }
+}
+
+

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title *ngIf="userRole === 'user'">История заказов</ion-title>
-    <ion-title *ngIf="userRole === 'admin'">Заказы</ion-title>
+    <ion-title *ngIf="userRole === 'Admin'">Заказы</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="userRole === 'user'">
@@ -20,14 +20,14 @@
   </ion-card>
 </ion-content>
 
-<ion-content *ngIf="userRole === 'admin'">
+<ion-content *ngIf="userRole === 'Admin'">
   <ion-card *ngFor="let data of mockedAdmin; let i = index">
     <ion-item class="admin-style">
         <ion-icon name="restaurant" slot="start"></ion-icon>
         <ion-card-title>{{data.name}}</ion-card-title>
     </ion-item>
     <div class="btn-block">
-      <ion-button (click)="takeOrder(data.id)" [disabled]="data.status">Принять</ion-button>
+      <ion-button (click)="takeOrder(data.id)" [disabled]="data.status" color="success">Принять</ion-button>
       <ion-button (click)="deleteOrder(i)" [disabled]="data.status" color="warning">Отклонить</ion-button>
     </div>
 

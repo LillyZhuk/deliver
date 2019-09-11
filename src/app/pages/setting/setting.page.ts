@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 import {AlertController} from '@ionic/angular';
 
@@ -7,6 +7,8 @@ import {ProfileService} from '../../services/profile.service';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SettingService} from '../../services/setting.service';
 import {Storage} from '@ionic/storage';
+import {DataFile} from '../../component/models/file';
+import {BgChangeService} from '../../services/bg-change.service';
 
 @Component({
   selector: 'app-setting',
@@ -19,6 +21,9 @@ export class SettingPage implements OnInit {
   public changePasswordForm: FormGroup;
   public changingPassword = false;
   public isCancel = false;
+  @ViewChild('fileBtn') fileBtn: {
+    nativeElement: HTMLInputElement
+  };
 
   constructor(
       public alertController: AlertController,
@@ -26,7 +31,8 @@ export class SettingPage implements OnInit {
       private authService: AuthService,
       private formBuilder: FormBuilder,
       private settingService: SettingService,
-      private storage: Storage
+      private storage: Storage,
+      private bgService: BgChangeService
   ) { }
 
   ngOnInit() {
@@ -98,6 +104,33 @@ export class SettingPage implements OnInit {
         return this.authService.logOut();
       });
     });
+  }
+
+  uploadPic(event) {
+    const files = event.target.files;
+
+    this.generationData(files);
+  }
+
+  public generationData(files): void {
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('UPLOADCARE_STORE', '1');
+    data.append('UPLOADCARE_PUB_KEY', 'ada5e3cb2da06dee6d82');
+
+    this.savePhoto(data);
+  }
+
+  public savePhoto(data: FormData) {
+    this.profileService.uploadImg(data).then(value => {
+      this.storage.get('uid').then(uid => {
+        this.bgService.changeBg(value, uid);
+      });
+    });
+  }
+
+  public openGallery(): void {
+    this.fileBtn.nativeElement.click();
   }
 
 }

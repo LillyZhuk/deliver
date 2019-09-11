@@ -61,6 +61,14 @@
 
     </div>
 
+    <div class="btn change-bg-image">
+      <input type="file" #fileBtn class="filebtn" (change)="uploadPic($event)" />
+      <ion-button color="secondary"
+                  (click)="openGallery()">
+        Изменить фон приложения
+      </ion-button>
+    </div>
+
   </div>
 
 </ion-content>

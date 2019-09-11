@@ -8,11 +8,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
     declarations: [
         EmojiPanelComponent,
-        ChangesComponent
+        ChangesComponent,
     ],
     exports: [
         EmojiPanelComponent,
-        ChangesComponent
+        ChangesComponent,
     ],
     imports: [
         CommonModule,

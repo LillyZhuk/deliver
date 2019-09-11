@@ -34,9 +34,10 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 
+import { BgImageDirective } from './component/directives/bg-image.directive';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, BgImageDirective],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -55,7 +56,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     AuthGuard,
     NativeStorage,
     ChatService,
@@ -66,6 +67,9 @@ import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
     Camera,
     Base64ToGallery,
     PhotoLibrary
+  ],
+  exports: [
+    BgImageDirective
   ],
   bootstrap: [AppComponent]
 })

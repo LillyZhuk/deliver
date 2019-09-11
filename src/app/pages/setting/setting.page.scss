@@ -28,3 +28,10 @@ ion-button {
   display: flex;
   justify-content: space-evenly;
 }
+
+.filebtn {
+  opacity: 0;
+  position: absolute;
+  top: -100em;
+  left: -100em;
+}

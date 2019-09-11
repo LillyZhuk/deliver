@@ -7,7 +7,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Subscription } from 'rxjs';
-import { Profile } from '../../component/models/profile.model';
+
 import * as firebase from 'firebase';
 import { DataFile } from '../../component/models/file';
 import {Entry} from '@ionic-native/file';

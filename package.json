@@ -34,7 +34,7 @@
     "express": "^4.17.1",
     "firebase": "^6.2.3",
     "ionic-angular": "^3.9.6",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "momentjs": "^2.0.0",
     "rxjs": "~6.5.1",
     "rxjs-compat": "^6.5.2",
